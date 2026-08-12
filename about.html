@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Authentech</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="site-splash">
+  <img src="assets/img/logo.png" alt="Authentech">
+  <div class="splash-word"><span class="grad-text">Authentech</span></div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+<script>
+  (function(){
+    var params = new URLSearchParams(location.search);
+    if (params.get("nav") === "1") {
+      document.body.classList.add("splash-done");
+    }
+    var theme = params.get("theme");
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.setAttribute("data-bs-theme", theme);
+    }
+    if (params.has("nav") || params.has("theme")) {
+      history.replaceState(null, "", location.pathname);
+    }
+  })();
+</script>
+
+<div class="sidebar" id="sidebar-root"></div>
+<div class="mobile-bottombar" id="mobile-bottombar-root"></div>
+
+<div class="main">
+  <div class="mobile-topbar" id="mobile-topbar-root"></div>
+
+  <div class="blob" style="width:300px; height:300px; background:#7c5cff; top:-60px; right:120px;"></div>
+  <div class="blob" style="width:220px; height:220px; background:#c05fe0; top:340px; left:45%;"></div>
+
+  <div class="topline" id="topline-root"></div>
+
+
+  <div class="page-hero">
+    <div class="eyebrow">About Authentech</div>
+    <h1>Five developers who became one team.</h1>
+    <p>We started as five individual freelancers taking on client work separately. Bringing our work under one name means one point of contact, a wider range of skills on every project, and a track record you can actually see &mdash; instead of five scattered portfolios.</p>
+  </div>
+
+  <div class="photo-banner mb-3" style="background-image:url('assets/img/blog/handshake-globe.jpg');">
+    <div class="photo-banner-overlay">
+      <span class="eyebrow" style="color:#d9c6ff;">Built on trust</span>
+      <div class="photo-banner-title">Partnerships that go the distance</div>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-6 col-md-3"><div class="stat-card"><div class="num grad-text">5</div><div class="lbl">Developers</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-card"><div class="num grad-text">7+</div><div class="lbl">Projects shipped</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-card"><div class="num grad-text">3&ndash;5w</div><div class="lbl">Avg. build time</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-card"><div class="num grad-text">100%</div><div class="lbl">Hosted &amp; supported</div></div></div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-7">
+      <div class="card h-100">
+        <div class="section-title">Why "digital home"?</div>
+        <div class="section-sub">Not just a website &mdash; the online version of what you've already built</div>
+        <p style="font-size:13.5px; color:var(--text-dim); line-height:1.65;">
+          If someone discovered your business online today, would they get the same quality they'd get walking through your door? That gap &mdash; between your physical business and your digital presence &mdash; is what we close. A restaurant's digital home is a menu, ordering and reservations. A fashion store's is a catalogue and a shop that never closes. We build the version of your business that works while you're not.
+        </p>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="card h-100">
+        <div class="section-title">What we do</div>
+        <div class="home-list">
+          <div class="home-row"><span class="ico"><i class="bi bi-code-slash"></i></span><div><b>Custom web &amp; desktop apps</b><small>Built for your workflow</small></div></div>
+          <div class="home-row"><span class="ico"><i class="bi bi-palette"></i></span><div><b>UI/UX design</b><small>Interfaces people enjoy using</small></div></div>
+          <div class="home-row"><span class="ico"><i class="bi bi-box-seam"></i></span><div><b>SaaS &amp; asset distribution</b><small>Reusable tools and components</small></div></div>
+          <div class="home-row"><span class="ico"><i class="bi bi-chat-dots"></i></span><div><b>Client consultation</b><small>We translate tech into plain terms</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-5">
+      <div class="photo-card" style="background-image:url('assets/img/blog/team-huddle.jpg');"></div>
+    </div>
+    <div class="col-lg-7">
+      <div class="card h-100">
+        <div class="section-title">Worked with</div>
+        <div class="section-sub">Businesses who trusted us with their digital home</div>
+        <div class="logo-strip">
+          <span>Peace Spot</span><span>M_Couture</span><span>UniStay Solutions</span><span>SkinDoctor Cosmetology</span><span>EMOL</span><span>De Posh Juice Co.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Authentech &mdash; 5 developers, one vision.</span>
+    <span>Built with HTML, CSS, JS &amp; Bootstrap</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderSidebar("about");
+  renderTopline("3 of 5 devs available now", "Get a free quote", "quote.html");
+  renderMobileTopbar();
+  renderMobileBottomBar("about");
+</script>
+
+</body>
+</html>

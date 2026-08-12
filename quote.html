@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get a Quote — Authentech</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="site-splash">
+  <img src="assets/img/logo.png" alt="Authentech">
+  <div class="splash-word"><span class="grad-text">Authentech</span></div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+<script>
+  (function(){
+    var params = new URLSearchParams(location.search);
+    if (params.get("nav") === "1") {
+      document.body.classList.add("splash-done");
+    }
+    var theme = params.get("theme");
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.setAttribute("data-bs-theme", theme);
+    }
+    if (params.has("nav") || params.has("theme")) {
+      history.replaceState(null, "", location.pathname);
+    }
+  })();
+</script>
+
+<div class="sidebar" id="sidebar-root"></div>
+<div class="mobile-bottombar" id="mobile-bottombar-root"></div>
+
+<div class="main">
+  <div class="mobile-topbar" id="mobile-topbar-root"></div>
+
+  <div class="blob" style="width:300px; height:300px; background:#7c5cff; top:-60px; right:120px;"></div>
+  <div class="blob" style="width:220px; height:220px; background:#c05fe0; top:340px; left:45%;"></div>
+
+  <div class="topline" id="topline-root"></div>
+
+
+  <div class="page-hero">
+    <div class="eyebrow">Get an instant quote</div>
+    <h1>Scope your project in under a minute.</h1>
+    <p>Toggle what you need and get a rough timeline right away. It's a starting point &mdash; we'll refine it once we know more about your business.</p>
+  </div>
+
+  <div class="card mb-3">
+    <div class="section-title">What do you need?</div>
+    <div class="section-sub">Select all that apply</div>
+    <div class="row g-2 mb-3" id="feature-list">
+      <div class="col-md-3 col-6"><div class="feature-chip" data-weeks="2">Auth system <span class="price">+2w</span></div></div>
+      <div class="col-md-3 col-6"><div class="feature-chip" data-weeks="3">Dashboard UI <span class="price">+3w</span></div></div>
+      <div class="col-md-3 col-6"><div class="feature-chip" data-weeks="2">Payments <span class="price">+2w</span></div></div>
+      <div class="col-md-3 col-6"><div class="feature-chip" data-weeks="1">DB integration <span class="price">+1w</span></div></div>
+      <div class="col-md-3 col-6"><div class="feature-chip" data-weeks="2">E-commerce cart <span class="price">+2w</span></div></div>
+      <div class="col-md-3 col-6"><div class="feature-chip" data-weeks="1">Booking / reservations <span class="price">+1w</span></div></div>
+      <div class="col-md-3 col-6"><div class="feature-chip" data-weeks="1">Contact / lead forms <span class="price">+1w</span></div></div>
+      <div class="col-md-3 col-6"><div class="feature-chip" data-weeks="2">Admin panel <span class="price">+2w</span></div></div>
+    </div>
+    <div class="row g-2 align-items-center">
+      <div class="col-md-8">
+        <div style="font-size:12.5px; color:var(--text-dim);" id="quote-note">Select a few features above to see your estimate.</div>
+      </div>
+      <div class="col-md-4">
+        <div class="calc-total">
+          <div class="num" id="quote-total">1&ndash;2 weeks</div>
+          <small>base build time</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Send this as a brief</div>
+    <div class="section-sub">We'll follow up with a proper quote based on your selections</div>
+    <div class="row g-2">
+      <div class="col-md-4"><input class="contact-input" id="q-name" placeholder="Your name"></div>
+      <div class="col-md-4"><input class="contact-input" id="q-business" placeholder="Business name"></div>
+      <div class="col-md-4"><input class="contact-input" id="q-email" placeholder="Email"></div>
+      <div class="col-12"><input class="contact-input" id="q-notes" placeholder="Anything else we should know?"></div>
+      <div class="col-12 d-flex gap-2 flex-wrap">
+        <button class="btn-grad" onclick="sendQuoteToWhatsApp()"><i class="bi bi-whatsapp"></i> Send my brief</button>
+        <a class="btn-ghost" href="tel:+2348079815323"><i class="bi bi-telephone-fill"></i> Call us</a>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Authentech &mdash; 5 developers, one vision.</span>
+    <span>Built with HTML, CSS, JS &amp; Bootstrap</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderSidebar("quote");
+  renderTopline("3 of 5 devs available now", "Contact us", "contact.html");
+  renderMobileTopbar();
+  renderMobileBottomBar("quote");
+</script>
+<script>
+  (function(){
+    const chips = document.querySelectorAll(".feature-chip");
+    const totalEl = document.getElementById("quote-total");
+    const noteEl = document.getElementById("quote-note");
+    function recalc(){
+      let weeks = 1, count = 0;
+      chips.forEach(c => { if (c.classList.contains("selected")) { weeks += parseInt(c.dataset.weeks || "0", 10); count++; } });
+      totalEl.textContent = count === 0 ? "1\u20132 weeks" : (weeks) + (weeks === 1 ? " week" : " weeks");
+      noteEl.textContent = count === 0
+        ? "Select a few features above to see your estimate."
+        : "Based on " + count + " selected feature" + (count > 1 ? "s" : "") + ", matched against team availability.";
+    }
+    chips.forEach(c => c.addEventListener("click", () => { c.classList.toggle("selected"); recalc(); }));
+    recalc();
+  })();
+
+  function sendQuoteToWhatsApp(){
+    const name = document.getElementById("q-name").value.trim();
+    const business = document.getElementById("q-business").value.trim();
+    const email = document.getElementById("q-email").value.trim();
+    const notes = document.getElementById("q-notes").value.trim();
+    const selected = Array.from(document.querySelectorAll(".feature-chip.selected"))
+      .map(c => c.childNodes[0].textContent.trim());
+    const total = document.getElementById("quote-total").textContent.trim();
+
+    let msg = "Hi Authentech, I'd like a quote for a project.\n";
+    if (name) msg += "\nName: " + name;
+    if (business) msg += "\nBusiness: " + business;
+    if (email) msg += "\nEmail: " + email;
+    if (selected.length) msg += "\n\nFeatures needed:\n- " + selected.join("\n- ");
+    msg += "\n\nEstimated build time: " + total;
+    if (notes) msg += "\n\nNotes: " + notes;
+
+    window.open("https://wa.me/2348079815323?text=" + encodeURIComponent(msg), "_blank");
+  }
+</script>
+</body>
+</html>

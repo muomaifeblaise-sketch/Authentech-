@@ -1,0 +1,124 @@
+[
+    {
+        "id": "p_skindoctor",
+        "name": "SkinDoctor Cosmetology",
+        "tagline": "Premium skincare e-commerce",
+        "description": "Skincare e-commerce site with product filtering, cart, and testimonials, built with a violet\/lavender glassmorphism theme.",
+        "live": "",
+        "repo": "",
+        "tags": [
+            "HTML",
+            "CSS",
+            "JS"
+        ],
+        "video": null,
+        "videoBytes": 0,
+        "createdAt": "2026-01-01T00:00:00+00:00"
+    },
+    {
+        "id": "p_pikaboo",
+        "name": "PIKABOO",
+        "tagline": "Social app rebuild",
+        "description": "A social app rebuild from an old PHP prototype into a full React + Node\/TypeScript stack, with real-time chat and video in progress.",
+        "live": "",
+        "repo": "",
+        "tags": [
+            "React",
+            "Node.js",
+            "TypeScript"
+        ],
+        "video": null,
+        "videoBytes": 0,
+        "createdAt": "2026-01-01T00:00:00+00:00"
+    },
+    {
+        "id": "p_peacespot",
+        "name": "Peace Spot",
+        "tagline": "Restaurant management system",
+        "description": "Full-featured restaurant management system with customer and manager dashboards, reservations, loyalty, and a built-in AI assistant.",
+        "live": "",
+        "repo": "",
+        "tags": [
+            "PHP",
+            "MySQL"
+        ],
+        "video": null,
+        "videoBytes": 0,
+        "createdAt": "2026-01-01T00:00:00+00:00"
+    },
+    {
+        "id": "p_mcouture",
+        "name": "M_Couture",
+        "tagline": "Fashion e-commerce & MIS",
+        "description": "Fashion e-commerce storefront and management information system for an independent designer, with a custom-matched UI.",
+        "live": "",
+        "repo": "",
+        "tags": [
+            "PHP",
+            "MySQL"
+        ],
+        "video": null,
+        "videoBytes": 0,
+        "createdAt": "2026-01-01T00:00:00+00:00"
+    },
+    {
+        "id": "p_emol",
+        "name": "EMOL",
+        "tagline": "Email outreach platform",
+        "description": "Smart email outreach and lead management platform for tracking and automating client communication.",
+        "live": "",
+        "repo": "",
+        "tags": [
+            "PHP",
+            "MySQL"
+        ],
+        "video": null,
+        "videoBytes": 0,
+        "createdAt": "2026-01-01T00:00:00+00:00"
+    },
+    {
+        "id": "p_unistay",
+        "name": "UniStay Solutions",
+        "tagline": "Student accommodation platform",
+        "description": "Student accommodation discovery platform with role-based routing for students and landlords, and double-booking prevention.",
+        "live": "",
+        "repo": "",
+        "tags": [
+            "PHP",
+            "MySQL"
+        ],
+        "video": null,
+        "videoBytes": 0,
+        "createdAt": "2026-01-01T00:00:00+00:00"
+    },
+    {
+        "id": "p_deposh",
+        "name": "De Posh Juice Co.",
+        "tagline": "Landing page for a juice brand",
+        "description": "Responsive landing page for a Lagos-based cold-pressed juice brand, with WhatsApp ordering built in.",
+        "live": "",
+        "repo": "",
+        "tags": [
+            "HTML",
+            "Bootstrap"
+        ],
+        "video": null,
+        "videoBytes": 0,
+        "createdAt": "2026-01-01T00:00:00+00:00"
+    },
+    {
+        "id": "p_templix",
+        "name": "Templix",
+        "tagline": "Flutter app template",
+        "description": "A Flutter-based app template project.",
+        "live": "",
+        "repo": "",
+        "tags": [
+            "Flutter",
+            "Dart"
+        ],
+        "video": null,
+        "videoBytes": 0,
+        "createdAt": "2026-01-01T00:00:00+00:00"
+    }
+]

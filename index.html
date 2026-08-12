@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home — Authentech</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=DM+Sans:wght@400;500;600&family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="assets/css/demo-embed.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="site-splash">
+  <img src="assets/img/logo.png" alt="Authentech">
+  <div class="splash-word"><span class="grad-text">Authentech</span></div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+<script>
+  (function(){
+    var params = new URLSearchParams(location.search);
+    if (params.get("nav") === "1") {
+      document.body.classList.add("splash-done");
+    }
+    var theme = params.get("theme");
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.setAttribute("data-bs-theme", theme);
+    }
+    if (params.has("nav") || params.has("theme")) {
+      history.replaceState(null, "", location.pathname);
+    }
+  })();
+</script>
+
+<div class="sidebar" id="sidebar-root"></div>
+<div class="mobile-bottombar" id="mobile-bottombar-root"></div>
+
+<div class="main">
+  <div class="mobile-topbar" id="mobile-topbar-root"></div>
+
+  <div class="blob" style="width:300px; height:300px; background:#7c5cff; top:-60px; right:120px;"></div>
+  <div class="blob" style="width:220px; height:220px; background:#c05fe0; top:340px; left:45%;"></div>
+
+  <div class="topline" id="topline-root"></div>
+
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-7">
+      <div class="card hero-card">
+        <div class="eyebrow">Your business, online</div>
+        <h1 class="display">Every business deserves a<br><span class="grad-text">digital home.</span></h1>
+        <p>Your customers already trust what you've built in person. Authentech gives that same experience a home online &mdash; built and run by a team of 5.</p>
+        <div class="d-flex gap-2">
+          <a href="quote.html" class="btn-grad">Get a free quote</a>
+          <a href="work.html" class="btn-ghost">See our work &rarr;</a>
+        </div>
+        <div class="float-chip" style="top:18px; right:-14px; --rot:4deg;">
+          <div class="fc-num grad-text">5</div>
+          <div class="fc-label">devs, one team</div>
+        </div>
+        <div class="float-chip" style="bottom:-16px; right:70px; --rot:-3deg;">
+          <div class="fc-num">3&ndash;5w</div>
+          <div class="fc-label">avg. build time</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="card h-100">
+        <div class="eyebrow">What's a digital home?</div>
+        <div class="home-list">
+          <div class="home-row"><span class="ico"><i class="bi bi-cup-hot"></i></span><div><b>Restaurant</b><small>Menu, ordering, reservations</small></div></div>
+          <div class="home-row"><span class="ico"><i class="bi bi-bag"></i></span><div><b>Fashion store</b><small>Catalogue, collections, shop</small></div></div>
+          <div class="home-row"><span class="ico"><i class="bi bi-building"></i></span><div><b>Hotel</b><small>Rooms, facilities, booking</small></div></div>
+          <div class="home-row"><span class="ico"><i class="bi bi-mortarboard"></i></span><div><b>School</b><small>Programs, admissions, info</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-3 product-preview">
+    <div class="pp-browser-bar">
+      <span class="dot" style="background:#ff5f57;"></span>
+      <span class="dot" style="background:#febc2e;"></span>
+      <span class="dot" style="background:#28c840;"></span>
+      <div class="url"><i class="bi bi-lock-fill" style="font-size:9px; margin-right:5px;"></i>authentech.dev</div>
+    </div>
+    <div style="padding:14px 14px 4px;">
+      <div class="eyebrow" style="margin-bottom:2px;">See our work</div>
+      <div class="section-sub" style="margin-bottom:10px;">Real projects, straight from the source</div>
+      <div class="pp-slides">
+        <div class="pp-arrow prev" onclick="ppMove(-1)"><i class="bi bi-chevron-left"></i></div>
+        <div class="pp-arrow next" onclick="ppMove(1)"><i class="bi bi-chevron-right"></i></div>
+        <div class="pp-slide-track" id="pp-track"></div>
+      </div>
+      <div class="pp-dots" id="pp-dots"></div>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-5">
+      <div class="card h-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="section-title">Meet the team</div>
+            <div class="section-sub">Five developers, one point of contact</div>
+          </div>
+          <a href="team.html" class="btn-ghost" style="padding:6px 14px; font-size:12px;">See all</a>
+        </div>
+        <div class="dev-row">
+          <div class="avatar"><i class="bi bi-person-fill"></i><img src="assets/img/team/team-1.jpg" alt="Justin" onerror="this.style.display='none'"></div>
+          <div class="flex-grow-1">
+            <div style="font-size:13.5px; font-weight:600;">Justin</div>
+            <div class="d-flex gap-1 mt-1"><span class="badge-stack">PHP</span><span class="badge-stack">MySQL</span><span class="badge-stack">JS</span></div>
+          </div>
+          <span class="status-dot avail"></span>
+        </div>
+        <div class="dev-row">
+          <div class="avatar"><i class="bi bi-person-fill"></i><img src="assets/img/team/team-2.jpg" alt="Developer" onerror="this.style.display='none'"></div>
+          <div class="flex-grow-1">
+            <div style="font-size:13.5px; font-weight:600;">Developer</div>
+            <div class="d-flex gap-1 mt-1"><span class="badge-stack">React</span><span class="badge-stack">Node</span></div>
+          </div>
+          <span class="status-dot busy"></span>
+        </div>
+        <div class="dev-row">
+          <div class="avatar"><i class="bi bi-person-fill"></i><img src="assets/img/team/team-3.jpg" alt="Developer" onerror="this.style.display='none'"></div>
+          <div class="flex-grow-1">
+            <div style="font-size:13.5px; font-weight:600;">Developer</div>
+            <div class="d-flex gap-1 mt-1"><span class="badge-stack">Laravel</span><span class="badge-stack">MySQL</span></div>
+          </div>
+          <span class="status-dot avail"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="card h-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="section-title">Our work</div>
+            <div class="section-sub">Real projects, built and deployed</div>
+          </div>
+          <a href="work.html" class="btn-ghost" style="padding:6px 14px; font-size:12px;">See all</a>
+        </div>
+        <div class="row g-2" id="home-work-preview">
+          <!-- Static fallback if the backend is unreachable; replaced by renderWorkPreview() -->
+          <div class="col-md-4">
+            <div class="proj-card">
+              <div class="video-placeholder"><div class="vp-play"><i class="bi bi-play-fill"></i></div><span class="vp-label"><i class="bi bi-record-circle"></i> Screen recording</span></div>
+              <div style="font-size:12.5px; font-weight:600;">SkinDoctor Cosmetology</div>
+              <div style="font-size:11px; color:var(--text-mute);">Skincare e-commerce</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="proj-card">
+              <div class="video-placeholder"><div class="vp-play"><i class="bi bi-play-fill"></i></div><span class="vp-label"><i class="bi bi-record-circle"></i> Screen recording</span></div>
+              <div style="font-size:12.5px; font-weight:600;">Peace Spot</div>
+              <div style="font-size:11px; color:var(--text-mute);">Restaurant management</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="proj-card">
+              <div class="video-placeholder"><div class="vp-play"><i class="bi bi-play-fill"></i></div><span class="vp-label"><i class="bi bi-record-circle"></i> Screen recording</span></div>
+              <div style="font-size:12.5px; font-weight:600;">PIKABOO</div>
+              <div style="font-size:11px; color:var(--text-mute);">Social app rebuild</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-8">
+      <div class="card h-100">
+        <div class="section-title">What clients say</div>
+        <div class="testi-card">
+          <p>"They understood our business before they wrote a line of code."</p>
+          <div class="who">Client name<small>Business owner</small></div>
+        </div>
+        <div class="text-end mt-2"><a href="testimonials.html" style="font-size:12px; color:var(--accent); text-decoration:none;">Read more testimonials &rarr;</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="section-title">Worked with</div>
+        <div class="section-sub">Businesses who trusted us</div>
+        <div class="logo-strip">
+          <span>Peace Spot</span><span>M_Couture</span><span>UniStay</span><span>SkinDoctor</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row align-items-center g-3">
+      <div class="col-md-8">
+        <div class="section-title">Ready to build your digital home?</div>
+        <div class="section-sub" style="margin-bottom:0;">Get a free quote or send us your project details directly.</div>
+      </div>
+      <div class="col-md-4 text-md-end">
+        <a href="quote.html" class="btn-grad me-2">Get a free quote</a>
+        <a href="contact.html" class="btn-ghost">Contact us</a>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Authentech &mdash; 5 developers, one vision.</span>
+    <span>Built with HTML, CSS, JS &amp; Bootstrap</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderSidebar("home");
+  renderTopline("3 of 5 devs available now", "Start a proposal", "quote.html");
+  renderMobileTopbar();
+  renderMobileBottomBar("home");
+
+  AT.fetchProjects().then(projects => {
+    if (projects && projects.length) {
+      AT.renderWorkPreview(document.getElementById("home-work-preview"), projects, 3);
+    }
+  });
+</script>
+<script>
+/* ══════════════════════════════════════════
+   LIVE DEMO SLIDES — EMOL + Templix
+   Full interactive mockups (ported from the projects.html
+   product pages) run one pass through their tabs, then hand
+   control back to the slideshow to advance to the next slide.
+══════════════════════════════════════════ */
+
+const EMOL_EMAIL_TEXTS = [
+`Subject: A Quick Question About Your Online Presence
+
+Hi Mama's Kitchen team,
+
+I noticed your restaurant has a fantastic 4.3-star rating on Google Maps — impressive! I'm reaching out because I help local restaurants like yours attract more customers through a professional website.
+
+Many of your competitors are already booking online. Would you be open to a quick 10-minute call to explore how we can help?
+
+Best,
+Justin`
+];
+
+const EmolDemo = (function(){
+  let timers = [];
+  let current = 0;
+  let cursorStep = 0;
+  let typingTimer = null;
+
+  function clearTimers(){
+    timers.forEach(clearTimeout);
+    timers = [];
+    clearTimeout(typingTimer);
+  }
+
+  function setActiveNav(idx){
+    document.querySelectorAll('#emolBrowser [id^="eNav"]').forEach((n,i)=> n.classList.toggle('active', i===idx));
+    document.querySelectorAll('#emolBrowser [id^="eSc"]').forEach((s,i)=> s.classList.toggle('active', i===idx));
+  }
+
+  function setActiveTab(idx){
+    document.querySelectorAll('#emolTabs .dtab').forEach((t,i)=>{
+      t.classList.toggle('active', i===idx);
+      t.style.background = i===idx ? 'rgba(0,229,160,.1)' : '';
+      t.style.borderColor = i===idx ? 'rgba(0,229,160,.3)' : '';
+      t.style.color = i===idx ? '#00e5a0' : '';
+    });
+  }
+
+  function goTab(idx){
+    setActiveNav(idx);
+    setActiveTab(idx);
+    current = idx;
+    if (idx === 1) startTyping();
+    if (idx === 3) animateBars();
+  }
+
+  function startTyping(){
+    clearTimeout(typingTimer);
+    const el = document.getElementById('emolTyping');
+    if (!el) return;
+    el.innerHTML = '<span class="cursor-blink"></span>';
+    const text = EMOL_EMAIL_TEXTS[0];
+    let charIdx = 0;
+    function type(){
+      if (charIdx <= text.length){
+        el.innerHTML = text.slice(0, charIdx).replace(/\n/g,'<br>') + '<span class="cursor-blink"></span>';
+        charIdx++;
+        typingTimer = setTimeout(type, charIdx < 50 ? 18 : 28);
+      }
+    }
+    type();
+  }
+
+  function typingDuration(){
+    const text = EMOL_EMAIL_TEXTS[0];
+    return 50*18 + Math.max(0, text.length-50)*28 + 900;
+  }
+
+  function animateBars(){
+    const bars = document.querySelectorAll('#emolChart .e-bar');
+    const heights = ['45%','20%','60%','25%','38%','18%','72%','30%','55%','22%','80%','35%','65%','28%'];
+    bars.forEach(b => b.style.height = '2%');
+    setTimeout(()=> bars.forEach((b,i)=> b.style.height = heights[i] || '30%'), 100);
+  }
+
+  function cursorClick(t, l){
+    const cursor = document.getElementById('emolCursor');
+    const ripple = document.getElementById('emolRipple');
+    if (!cursor) return;
+    cursor.style.opacity = '1';
+    cursor.style.top = t; cursor.style.left = l;
+    timers.push(setTimeout(()=>{
+      cursor.style.transform = 'translate(-2px,-2px) scale(.85)';
+      if (ripple){
+        ripple.style.top = t; ripple.style.left = l;
+        ripple.classList.remove('pop'); void ripple.offsetWidth; ripple.classList.add('pop');
+      }
+      timers.push(setTimeout(()=> cursor.style.transform = 'translate(-2px,-2px) scale(1)', 200));
+    }, 850));
+  }
+
+  function reset(){
+    clearTimers();
+    cursorStep = 0;
+    goTab(0);
+    const el = document.getElementById('emolTyping');
+    if (el) el.innerHTML = '';
+    const cursor = document.getElementById('emolCursor');
+    if (cursor) cursor.style.opacity = '0';
+  }
+
+  function play(onDone){
+    reset();
+    let t = 400;
+
+    timers.push(setTimeout(()=> cursorClick('25%','60%'), t)); t += 1600;
+    timers.push(setTimeout(()=> cursorClick('78%','55%'), t)); t += 1800;
+
+    timers.push(setTimeout(()=> goTab(1), t)); t += typingDuration();
+
+    timers.push(setTimeout(()=> goTab(2), t));
+    timers.push(setTimeout(()=> cursorClick('42%','30%'), t + 500)); t += 3000;
+
+    timers.push(setTimeout(()=> goTab(3), t)); t += 2900;
+
+    timers.push(setTimeout(()=>{
+      const cursor = document.getElementById('emolCursor');
+      if (cursor) cursor.style.opacity = '0';
+    }, t)); t += 500;
+
+    timers.push(setTimeout(()=> onDone && onDone(), t));
+  }
+
+  function stop(){ clearTimers(); }
+
+  return { play, stop, reset, goto: goTab };
+})();
+
+const TemplixDemo = (function(){
+  let timers = [];
+  let current = 0;
+
+  function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+
+  function setActiveTab(idx){
+    document.querySelectorAll('#templixTabs .dtab').forEach((t,i)=>{
+      t.classList.toggle('active', i===idx);
+      t.style.background = i===idx ? 'rgba(255,60,172,.1)' : '';
+      t.style.borderColor = i===idx ? 'rgba(255,60,172,.3)' : '';
+      t.style.color = i===idx ? '#FF3CAC' : '';
+    });
+  }
+
+  function goTab(idx){
+    document.querySelectorAll('#templixBrowser [id^="tSc"]').forEach((s,i)=> s.classList.toggle('active', i===idx));
+    setActiveTab(idx);
+    current = idx;
+  }
+
+  function triggerGenerate(){
+    const spinner = document.getElementById('tSpinner');
+    const bar = document.getElementById('tProgressBar');
+    if (!spinner || !bar) return;
+    spinner.classList.add('show');
+    bar.style.width = '0';
+    let prog = 0;
+    const progInt = setInterval(()=>{
+      prog += Math.random()*8+4;
+      if (prog >= 100){ prog = 100; clearInterval(progInt); }
+      bar.style.width = prog + '%';
+    }, 120);
+    timers.push(setTimeout(()=> spinner.classList.remove('show'), 2200));
+  }
+
+  function selectCard(idx){
+    const cards = document.querySelectorAll('#tCanvas .t-card');
+    cards.forEach(c => c.classList.remove('selected'));
+    if (cards[idx]) cards[idx].classList.add('selected');
+  }
+
+  function cursorClick(t, l){
+    const cursor = document.getElementById('templixCursor');
+    const ripple = document.getElementById('templixRipple');
+    if (!cursor) return;
+    cursor.style.opacity = '1';
+    cursor.style.top = t; cursor.style.left = l;
+    timers.push(setTimeout(()=>{
+      cursor.style.transform = 'translate(-2px,-2px) scale(.85)';
+      if (ripple){
+        ripple.style.top = t; ripple.style.left = l;
+        ripple.classList.remove('pop'); void ripple.offsetWidth; ripple.classList.add('pop');
+      }
+      timers.push(setTimeout(()=> cursor.style.transform = 'translate(-2px,-2px) scale(1)', 200));
+    }, 850));
+  }
+
+  function reset(){
+    clearTimers();
+    goTab(0);
+    selectCard(0);
+    const spinner = document.getElementById('tSpinner');
+    if (spinner) spinner.classList.remove('show');
+    const cursor = document.getElementById('templixCursor');
+    if (cursor) cursor.style.opacity = '0';
+  }
+
+  function play(onDone){
+    reset();
+    let t = 400;
+
+    timers.push(setTimeout(()=> cursorClick('32%','52%'), t));
+    timers.push(setTimeout(()=> selectCard(1), t + 850)); t += 1500;
+    timers.push(setTimeout(()=> triggerGenerate(), t)); t += 2600;
+
+    timers.push(setTimeout(()=> goTab(1), t));
+    timers.push(setTimeout(()=> cursorClick('50%','20%'), t + 400)); t += 2800;
+
+    timers.push(setTimeout(()=> goTab(2), t)); t += 2900;
+
+    timers.push(setTimeout(()=>{
+      const cursor = document.getElementById('templixCursor');
+      if (cursor) cursor.style.opacity = '0';
+    }, t)); t += 500;
+
+    timers.push(setTimeout(()=> onDone && onDone(), t));
+  }
+
+  function stop(){ clearTimers(); }
+
+  return { play, stop, reset, goto: goTab };
+})();
+
+/* Manual tab clicks inside a live demo (bridges the onclick="emolGo(...)"
+   / onclick="templixGo(...)" handlers ported from the original markup) */
+function emolGo(idx){ EmolDemo.stop(); EmolDemo.goto(idx); }
+function templixGo(idx){ TemplixDemo.stop(); TemplixDemo.goto(idx); }
+
+const PeaceSpotDemo = (function(){
+  let timers = [];
+  function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+
+  function goTab(idx){
+    document.querySelectorAll('#psBrowser .ps-screen').forEach((s,i)=> s.classList.toggle('active', i===idx));
+    document.querySelectorAll('#psTabs .dtab').forEach((t,i)=>{
+      t.classList.toggle('active', i===idx);
+      t.style.background = i===idx ? 'rgba(245,166,35,.1)' : '';
+      t.style.borderColor = i===idx ? 'rgba(245,166,35,.3)' : '';
+      t.style.color = i===idx ? '#F5A623' : '';
+    });
+  }
+
+  function typeInto(fieldId, text, masked, onDone){
+    const el = document.getElementById(fieldId);
+    if (!el){ onDone && onDone(); return; }
+    el.classList.add('typing');
+    let i = 0;
+    el.innerHTML = '<span class="ps-caret"></span>';
+    function step(){
+      if (i <= text.length){
+        const shown = masked ? '•'.repeat(i) : text.slice(0, i);
+        el.innerHTML = shown + '<span class="ps-caret"></span>';
+        i++;
+        timers.push(setTimeout(step, 55));
+      } else {
+        timers.push(setTimeout(()=> onDone && onDone(), 300));
+      }
+    }
+    step();
+  }
+
+  function pressSubmit(cb){
+    const btn = document.getElementById('psSubmitBtn');
+    if (!btn){ cb && cb(); return; }
+    btn.classList.add('pressed');
+    timers.push(setTimeout(()=>{
+      btn.classList.remove('pressed');
+      cb && cb();
+    }, 250));
+  }
+
+  function cursorClick(t, l, cb){
+    const cursor = document.getElementById('psCursor');
+    const ripple = document.getElementById('psRipple');
+    if (!cursor){ cb && cb(); return; }
+    cursor.style.opacity = '1';
+    cursor.style.top = t; cursor.style.left = l;
+    timers.push(setTimeout(()=>{
+      cursor.style.transform = 'translate(-2px,-2px) scale(.85)';
+      if (ripple){
+        ripple.style.top = t; ripple.style.left = l;
+        ripple.classList.remove('pop'); void ripple.offsetWidth; ripple.classList.add('pop');
+      }
+      timers.push(setTimeout(()=>{
+        cursor.style.transform = 'translate(-2px,-2px) scale(1)';
+        cb && cb();
+      }, 200));
+    }, 750));
+  }
+
+  function highlightOrder(){
+    const card = document.getElementById('psOrderCard0');
+    if (card) card.classList.add('highlight');
+  }
+
+  function toggleMenuItem(){
+    const t = document.getElementById('psToggle1');
+    if (t) t.classList.toggle('on');
+  }
+
+  function reset(){
+    clearTimers();
+    goTab(0);
+    const email = document.getElementById('psEmailInput');
+    const pass = document.getElementById('psPassInput');
+    if (email){ email.innerHTML = '&nbsp;'; email.classList.remove('typing'); }
+    if (pass){ pass.innerHTML = '&nbsp;'; pass.classList.remove('typing'); }
+    const cursor = document.getElementById('psCursor');
+    if (cursor) cursor.style.opacity = '0';
+    const card = document.getElementById('psOrderCard0');
+    if (card) card.classList.remove('highlight');
+    const t = document.getElementById('psToggle1');
+    if (t) t.classList.add('on');
+  }
+
+  function play(onDone){
+    reset();
+
+    timers.push(setTimeout(()=> cursorClick('30%','50%', ()=>{
+      typeInto('psEmailInput', 'manager@peacespot.ng', false, ()=>{
+        cursorClick('30%','65%', ()=>{
+          typeInto('psPassInput', 'peacespot123', true, ()=>{
+            cursorClick('50%','83%', ()=> pressSubmit(()=>{
+              goTab(1);
+              timers.push(setTimeout(()=>{
+                highlightOrder();
+                cursorClick('20%','24%', ()=>{
+                  timers.push(setTimeout(()=>{
+                    goTab(2);
+                    timers.push(setTimeout(()=>{
+                      goTab(3);
+                      timers.push(setTimeout(()=>{
+                        cursorClick('88%','32%', toggleMenuItem);
+                        timers.push(setTimeout(()=>{
+                          const cursor = document.getElementById('psCursor');
+                          if (cursor) cursor.style.opacity = '0';
+                          timers.push(setTimeout(()=> onDone && onDone(), 500));
+                        }, 1600));
+                      }, 300));
+                    }, 2600));
+                  }, 2600));
+                });
+              }, 600));
+            }));
+          });
+        });
+      });
+    })), 500);
+  }
+
+  function stop(){ clearTimers(); }
+
+  return { play, stop, reset, goto: goTab };
+})();
+
+const PikabooDemo = (function(){
+  let timers = [];
+  function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+
+  function goTab(idx){
+    document.querySelectorAll('#pkTabs .dtab').forEach((t,i)=>{
+      t.classList.toggle('active', i===idx);
+      t.style.background = i===idx ? 'rgba(132,204,22,.12)' : '';
+      t.style.borderColor = i===idx ? 'rgba(132,204,22,.35)' : '';
+      t.style.color = i===idx ? '#84cc16' : '';
+    });
+    const screens = ['pkSc0','pkSc1','pkSc2'];
+    screens.forEach((id,i)=>{
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('active', i===idx);
+    });
+    const navIds = ['pkNav0','pkNav1','pkNav2'];
+    const dotIds = ['pkDot0','pkDot1','pkDot2'];
+    navIds.forEach((id,i)=>{
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('active', i===idx);
+    });
+    dotIds.forEach((id,i)=>{
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('active', i===idx);
+    });
+  }
+
+  function cursorClick(t, l, cb){
+    const cursor = document.getElementById('pkCursor');
+    const ripple = document.getElementById('pkRipple');
+    if (!cursor){ cb && cb(); return; }
+    cursor.style.opacity = '1';
+    cursor.style.top = t; cursor.style.left = l;
+    timers.push(setTimeout(()=>{
+      cursor.style.transform = 'translate(-2px,-2px) scale(.85)';
+      if (ripple){
+        ripple.style.top = t; ripple.style.left = l;
+        ripple.classList.remove('pop'); void ripple.offsetWidth; ripple.classList.add('pop');
+      }
+      timers.push(setTimeout(()=>{
+        cursor.style.transform = 'translate(-2px,-2px) scale(1)';
+        cb && cb();
+      }, 200));
+    }, 750));
+  }
+
+  function likePost(){
+    const heart = document.getElementById('pkHeart0');
+    if (!heart) return;
+    heart.classList.add('liked');
+    heart.setAttribute('fill', '#84cc16');
+    heart.setAttribute('stroke', '#84cc16');
+  }
+
+  function reset(){
+    clearTimers();
+    goTab(0);
+    const heart = document.getElementById('pkHeart0');
+    if (heart){ heart.classList.remove('liked'); heart.setAttribute('fill','none'); heart.setAttribute('stroke','#c4cbc0'); }
+    const cursor = document.getElementById('pkCursor');
+    if (cursor) cursor.style.opacity = '0';
+  }
+
+  function play(onDone){
+    reset();
+    let t = 500;
+
+    timers.push(setTimeout(()=> cursorClick('62%','54%', likePost), t)); t += 1500;
+    timers.push(setTimeout(()=> cursorClick('20%','12%'), t)); t += 1600;
+
+    timers.push(setTimeout(()=> goTab(1), t)); t += 2600;
+
+    timers.push(setTimeout(()=> goTab(2), t)); t += 2900;
+
+    timers.push(setTimeout(()=>{
+      const cursor = document.getElementById('pkCursor');
+      if (cursor) cursor.style.opacity = '0';
+    }, t)); t += 500;
+
+    timers.push(setTimeout(()=> onDone && onDone(), t));
+  }
+
+  function stop(){ clearTimers(); }
+
+  return { play, stop, reset, goto: goTab };
+})();
+
+function peaceSpotGo(idx){ PeaceSpotDemo.stop(); PeaceSpotDemo.goto(idx); }
+function pikabooGo(idx){ PikabooDemo.stop(); PikabooDemo.goto(idx); }
+
+
+const EMOL_SLIDE_HTML = `
+<div class="ppl-stage"><div class="ppl-stage-inner">
+        <div class="browser" id="emolBrowser">
+          <div class="browser-chrome" style="background:#0d1018">
+            <div class="chrome-dots">
+              <div class="chrome-dot r"></div><div class="chrome-dot y"></div><div class="chrome-dot g"></div>
+            </div>
+            <div class="chrome-url">
+              <svg class="chrome-url-lock" viewBox="0 0 12 12" fill="none" stroke="#666" stroke-width="1.2"><rect x="2" y="5" width="8" height="6" rx="1"/><path d="M4 5V3.5a2 2 0 014 0V5"/></svg>
+              <span style="font-size:.66rem;color:#444;flex:1">app.emol.io/dashboard</span>
+            </div>
+          </div>
+          <div class="browser-body" style="background:#08090d">
+            <div style="display:flex;height:100%;position:relative">
+
+              <!-- EMOL Sidebar -->
+              <div class="e-sidebar">
+                <div class="e-logo">EM<span style="color:#00e5a0">O</span>L</div>
+                <div class="e-nav">
+                  <div class="e-nav-section">Main</div>
+                  <div class="e-nav-item active" id="eNav0">
+                    <svg viewBox="0 0 12 12" fill="currentColor"><rect x="1" y="1" width="4" height="4" rx=".8"/><rect x="7" y="1" width="4" height="4" rx=".8"/><rect x="1" y="7" width="4" height="4" rx=".8"/><rect x="7" y="7" width="4" height="4" rx=".8"/></svg>
+                    <span>Dashboard</span>
+                  </div>
+                  <div class="e-nav-item" id="eNav1">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="6" r="4.5"/><path d="M6 4v2l1.5 1.5"/></svg>
+                    <span>AI Write</span>
+                  </div>
+                  <div class="e-nav-section">Tools</div>
+                  <div class="e-nav-item" id="eNav2">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 6A4 4 0 116 2"/><path d="M8 2l2 0 0 2"/></svg>
+                    <span>Lead Hunt</span>
+                  </div>
+                  <div class="e-nav-item" id="eNav3">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><polyline points="1,9 4,5 7,7 11,2"/></svg>
+                    <span>Analytics</span>
+                  </div>
+                </div>
+                <div class="e-user">
+                  <div class="e-avatar">JN</div>
+                  <div>
+                    <div class="e-uname">Justin</div>
+                    <div class="e-urole">Pro</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- EMOL Screens -->
+              <div style="flex:1;position:relative;min-width:0">
+                <div class="screens">
+
+                  <!-- Screen 0: Dashboard -->
+                  <div class="screen active" id="eSc0">
+                    <div class="e-main">
+                      <div class="e-topbar">
+                        <div class="e-topbar-title">Good morning, <span>Justin</span> 👋</div>
+                        <div class="e-topbar-pills">
+                          <div class="e-pill-item on">Live</div>
+                          <div class="e-pill-item">Today</div>
+                        </div>
+                        <div class="e-topbar-btn">+ New Campaign</div>
+                      </div>
+                      <div class="e-body">
+                        <div class="e-stat-row">
+                          <div class="e-stat">
+                            <div class="e-stat-lbl">Open Rate</div>
+                            <div class="e-stat-val">34.2%</div>
+                            <div class="e-stat-delta">↑ 4.1% this week</div>
+                          </div>
+                          <div class="e-stat">
+                            <div class="e-stat-lbl">Reply Rate</div>
+                            <div class="e-stat-val blue">8.7%</div>
+                            <div class="e-stat-delta">↑ 1.2% this week</div>
+                          </div>
+                          <div class="e-stat">
+                            <div class="e-stat-lbl">Emails Sent</div>
+                            <div class="e-stat-val w">12,847</div>
+                            <div class="e-stat-delta">↑ 847 today</div>
+                          </div>
+                        </div>
+                        <div class="e-two-col">
+                          <div class="e-mini">
+                            <div class="e-mini-title">Active Campaigns</div>
+                            <div class="e-camp-row"><div class="e-camp-dot g"></div><div class="e-camp-name">Lagos Restaurants</div><div class="e-camp-rate">41%</div></div>
+                            <div class="e-camp-row"><div class="e-camp-dot b"></div><div class="e-camp-name">Abuja Tech</div><div class="e-camp-rate">28%</div></div>
+                            <div class="e-camp-row"><div class="e-camp-dot g"></div><div class="e-camp-name">PH Hotels</div><div class="e-camp-rate">35%</div></div>
+                            <div class="e-camp-row"><div class="e-camp-dot m"></div><div class="e-camp-name">Retail SMBs</div><div class="e-camp-rate">12%</div></div>
+                          </div>
+                          <div class="e-mini" style="padding-bottom:6px">
+                            <div class="e-mini-title">Opens This Week</div>
+                            <div class="e-sparkline" id="emolSpark">
+                              <div class="e-bar-s" style="height:30%"></div>
+                              <div class="e-bar-s" style="height:45%"></div>
+                              <div class="e-bar-s" style="height:38%"></div>
+                              <div class="e-bar-s" style="height:60%"></div>
+                              <div class="e-bar-s" style="height:52%"></div>
+                              <div class="e-bar-s" style="height:75%"></div>
+                              <div class="e-bar-s" style="height:88%"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Screen 1: AI Write -->
+                  <div class="screen" id="eSc1">
+                    <div class="e-main">
+                      <div class="e-topbar">
+                        <div class="e-topbar-title"><span>AI</span> Email Composer</div>
+                        <div class="e-topbar-pills">
+                          <div class="e-pill-item on">GPT-4o</div>
+                          <div class="e-pill-item">Pro</div>
+                        </div>
+                        <div class="e-topbar-btn">⚡ Generate</div>
+                      </div>
+                      <div class="e-body">
+                        <div class="e-ai-layout">
+                          <div class="e-ai-panel">
+                            <div class="e-ai-lbl">Target Business</div>
+                            <div class="e-ai-input" style="min-height:36px;flex:none">Mama's Kitchen Restaurant, Lagos<br>No website found · Rating: 4.3★</div>
+                            <div class="e-ai-lbl">Tone</div>
+                            <div style="display:flex;gap:4px;flex-wrap:wrap">
+                              <div style="font-size:.52rem;padding:2px 8px;border-radius:999px;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.25);color:#00e5a0">Professional</div>
+                              <div style="font-size:.52rem;padding:2px 8px;border-radius:999px;background:#1a1a24;border:1px solid #1e2535;color:#444">Friendly</div>
+                              <div style="font-size:.52rem;padding:2px 8px;border-radius:999px;background:#1a1a24;border:1px solid #1e2535;color:#444">Urgent</div>
+                            </div>
+                            <div class="e-ai-btn" id="emolGenBtn">⚡ Generate Email</div>
+                          </div>
+                          <div class="e-ai-result">
+                            <div class="e-ai-result-lbl">Generated Email</div>
+                            <div id="emolTyping"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Screen 2: Lead Hunt -->
+                  <div class="screen" id="eSc2">
+                    <div class="e-main">
+                      <div class="e-topbar">
+                        <div class="e-topbar-title"><span>Lead</span> Hunter</div>
+                        <div class="e-topbar-pills">
+                          <div class="e-pill-item on">Google Maps</div>
+                        </div>
+                        <div class="e-topbar-btn">⬇ Export CSV</div>
+                      </div>
+                      <div class="e-body">
+                        <div class="e-hunt-top">
+                          <div class="e-hunt-input">🔍 Search: "restaurants Lagos Nigeria"</div>
+                          <div class="e-hunt-btn">Hunt Leads</div>
+                        </div>
+                        <div class="e-hunt-grid">
+                          <div class="e-biz">
+                            <div class="e-biz-name">Mama's Kitchen</div>
+                            <div class="e-biz-cat">Restaurant · Lagos Island</div>
+                            <div class="e-biz-tags"><span class="e-tag no">No Website</span><span class="e-tag" style="background:rgba(0,229,160,.1);color:#00e5a0;border:1px solid rgba(0,229,160,.2);font-size:.5rem;font-weight:700;padding:2px 6px;border-radius:3px">4.3 ★</span></div>
+                          </div>
+                          <div class="e-biz">
+                            <div class="e-biz-name">Eko Bites</div>
+                            <div class="e-biz-cat">Fast Food · Victoria Island</div>
+                            <div class="e-biz-tags"><span class="e-tag no">No Website</span></div>
+                          </div>
+                          <div class="e-biz">
+                            <div class="e-biz-name">Tasty Corner</div>
+                            <div class="e-biz-cat">Local Dining · Ikeja</div>
+                            <div class="e-biz-tags"><span class="e-tag yes">Has Website</span></div>
+                          </div>
+                          <div class="e-biz">
+                            <div class="e-biz-name">The Grill House</div>
+                            <div class="e-biz-cat">BBQ · Lekki Phase 1</div>
+                            <div class="e-biz-tags"><span class="e-tag no">No Website</span></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Screen 3: Analytics -->
+                  <div class="screen" id="eSc3">
+                    <div class="e-main">
+                      <div class="e-topbar">
+                        <div class="e-topbar-title"><span>Analytics</span> Overview</div>
+                        <div class="e-topbar-pills">
+                          <div class="e-pill-item on">Last 30 Days</div>
+                        </div>
+                      </div>
+                      <div class="e-body">
+                        <div class="e-analytics-stats">
+                          <div class="e-as"><div class="e-as-val">67.4K</div><div class="e-as-lbl">Total Sent</div></div>
+                          <div class="e-as"><div class="e-as-val blue">34.2%</div><div class="e-as-lbl">Avg Open Rate</div></div>
+                          <div class="e-as"><div class="e-as-val orange">8.7%</div><div class="e-as-lbl">Reply Rate</div></div>
+                        </div>
+                        <div class="e-chart-wrap">
+                          <div class="e-chart-title">Daily Outreach — Opens vs Replies</div>
+                          <div class="e-bar-group" id="emolChart">
+                            <div class="e-bar" style="height:45%"></div><div class="e-bar b" style="height:20%"></div>
+                            <div class="e-bar" style="height:60%"></div><div class="e-bar b" style="height:25%"></div>
+                            <div class="e-bar" style="height:38%"></div><div class="e-bar b" style="height:18%"></div>
+                            <div class="e-bar" style="height:72%"></div><div class="e-bar b" style="height:30%"></div>
+                            <div class="e-bar" style="height:55%"></div><div class="e-bar b" style="height:22%"></div>
+                            <div class="e-bar" style="height:80%"></div><div class="e-bar b" style="height:35%"></div>
+                            <div class="e-bar" style="height:65%"></div><div class="e-bar b" style="height:28%"></div>
+                          </div>
+                          <div class="e-bar-labels">
+                            <div class="e-bar-label">M</div><div class="e-bar-label">T</div><div class="e-bar-label">W</div>
+                            <div class="e-bar-label">T</div><div class="e-bar-label">F</div><div class="e-bar-label">S</div><div class="e-bar-label">S</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div><!-- /screens -->
+
+                <!-- EMOL Cursor -->
+                <svg class="demo-cursor" id="emolCursor" viewBox="0 0 18 22" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 2L2 18L6.5 13.5L9.5 20L11.5 19L8.5 12L14 12Z" fill="white" stroke="#222" stroke-width=".8"/>
+                </svg>
+                <div class="demo-ripple" id="emolRipple" style="border-color:rgba(0,229,160,.7)"></div>
+
+              </div><!-- /main -->
+            </div>
+          </div><!-- /browser-body -->
+        </div><!-- /browser -->
+
+        <!-- EMOL Tabs -->
+        <div class="demo-tabs" id="emolTabs">
+          <button class="dtab active" onclick="emolGo(0,this)" style="--ac:#00e5a0">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="currentColor"><rect x="1" y="1" width="4" height="4" rx=".8"/><rect x="7" y="1" width="4" height="4" rx=".8"/><rect x="1" y="7" width="4" height="4" rx=".8"/><rect x="7" y="7" width="4" height="4" rx=".8"/></svg>
+            Dashboard
+          </button>
+          <button class="dtab" onclick="emolGo(1,this)" style="--ac:#00e5a0">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/><path d="M6 4v2l1.5 1.5"/></svg>
+            AI Writer
+          </button>
+          <button class="dtab" onclick="emolGo(2,this)" style="--ac:#00e5a0">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 6A4 4 0 116 2"/><path d="M8 2l2 0 0 2"/></svg>
+            Lead Hunt
+          </button>
+          <button class="dtab" onclick="emolGo(3,this)" style="--ac:#00e5a0">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="1,9 4,5 7,7 11,2"/></svg>
+            Analytics
+          </button>
+        </div>
+
+</div></div>
+`;
+
+const TEMPLIX_SLIDE_HTML = `
+<div class="ppl-stage"><div class="ppl-stage-inner">
+        <div class="browser" id="templixBrowser">
+          <div class="browser-chrome" style="background:#08080f">
+            <div class="chrome-dots">
+              <div class="chrome-dot r"></div><div class="chrome-dot y"></div><div class="chrome-dot g"></div>
+            </div>
+            <div class="chrome-url" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.06)">
+              <svg class="chrome-url-lock" viewBox="0 0 12 12" fill="none" stroke="#555" stroke-width="1.2"><rect x="2" y="5" width="8" height="6" rx="1"/><path d="M4 5V3.5a2 2 0 014 0V5"/></svg>
+              <span style="font-size:.66rem;color:#3A3A5A;flex:1">templix.app/studio</span>
+            </div>
+          </div>
+          <div class="browser-body" style="background:#060609">
+
+            <!-- Templix Topbar -->
+            <div class="t-topbar">
+              <div class="t-logo">TEMPLIX</div>
+              <div class="t-top-divider"></div>
+              <div class="t-tools">
+                <div class="t-tool-btn active">File</div>
+                <div class="t-tool-btn">Edit</div>
+                <div class="t-tool-btn">View</div>
+                <div class="t-tool-btn">Export</div>
+              </div>
+              <div class="t-zoom">
+                <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5" r="3.5"/><path d="M8 8l3 3"/><path d="M3.5 5h3M5 3.5v3"/></svg>
+                100%
+              </div>
+              <div class="t-col-btns">
+                <div class="t-col-btn">
+                  <svg viewBox="0 0 10 10" fill="currentColor"><rect x="1" y="1" width="3.5" height="8"/><rect x="5.5" y="1" width="3.5" height="8"/></svg>
+                </div>
+                <div class="t-col-btn active">
+                  <svg viewBox="0 0 10 10" fill="currentColor"><rect x=".5" y="1" width="2.5" height="8"/><rect x="3.5" y="1" width="2.5" height="8"/><rect x="6.5" y="1" width="2.5" height="8"/></svg>
+                </div>
+                <div class="t-col-btn">
+                  <svg viewBox="0 0 10 10" fill="currentColor"><rect x=".5" y="1" width="1.8" height="8"/><rect x="2.9" y="1" width="1.8" height="8"/><rect x="5.3" y="1" width="1.8" height="8"/><rect x="7.7" y="1" width="1.8" height="8"/></svg>
+                </div>
+              </div>
+              <div class="t-gen-btn" id="templixGenBtn">
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,1 9,6 5,11 1,6"/></svg>
+                Generate
+              </div>
+            </div>
+
+            <div style="display:flex;height:calc(100% - 44px);position:relative">
+
+              <!-- Templix screens -->
+              <div class="screens" style="position:absolute;inset:0;top:0">
+
+                <!-- Screen 0: Studio with Backgrounds tab -->
+                <div class="screen active" id="tSc0" style="flex-direction:row">
+                  <div class="t-sidebar">
+                    <div class="t-sib-tab active" id="tTab0">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+                      <span class="t-sib-lbl">BG</span>
+                    </div>
+                    <div class="t-sib-tab" id="tTab1">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h10M4 17h12"/></svg>
+                      <span class="t-sib-lbl">Fonts</span>
+                    </div>
+                    <div class="t-sib-tab" id="tTab2">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg>
+                      <span class="t-sib-lbl">Palette</span>
+                    </div>
+                    <div class="t-sib-tab" id="tTab3">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                      <span class="t-sib-lbl">Categ</span>
+                    </div>
+                    <div class="t-sib-tab" id="tTab4">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+                      <span class="t-sib-lbl">Logo</span>
+                    </div>
+                  </div>
+
+                  <div class="t-side-panel" id="tSidePanel">
+                    <div class="t-side-panel-header">
+                      <div class="t-side-panel-title" id="tPanelTitle">Backgrounds</div>
+                      <input class="t-side-search" placeholder="Search..." value="gradient"/>
+                    </div>
+                    <div class="t-side-panel-body">
+                      <div class="t-bg-grid" id="tBgGrid">
+                        <div class="t-bg-swatch g1 sel"></div>
+                        <div class="t-bg-swatch g2"></div>
+                        <div class="t-bg-swatch g3"></div>
+                        <div class="t-bg-swatch g4"></div>
+                        <div class="t-bg-swatch g5"></div>
+                        <div class="t-bg-swatch g6"></div>
+                        <div class="t-bg-swatch g7"></div>
+                        <div class="t-bg-swatch g8"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="t-canvas col3" id="tCanvas">
+                    <!-- Card 1: Bold -->
+                    <div class="t-card t-card-bold selected" id="tCard0">
+                      <div class="t-card-inner">
+                        <div class="t-card-bold-text">CREATIVE<br>STUDIO</div>
+                        <div class="t-card-bold-sub">Design · Build · Launch</div>
+                        <div class="t-card-hover">
+                          <div class="t-card-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v10M1 6h10"/></svg></div>
+                          <div class="t-card-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2l8 8M10 2l-8 8"/></svg></div>
+                        </div>
+                        <div class="t-style-lbl">Bold</div>
+                      </div>
+                    </div>
+                    <!-- Card 2: Minimal -->
+                    <div class="t-card t-card-minimal" id="tCard1">
+                      <div class="t-card-inner">
+                        <div class="t-card-minimal-text">Where ideas<br>become reality</div>
+                        <div class="t-card-minimal-line"></div>
+                        <div class="t-card-minimal-sub">Est. 2024</div>
+                        <div class="t-card-hover">
+                          <div class="t-card-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v10M1 6h10"/></svg></div>
+                          <div class="t-card-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2l8 8M10 2l-8 8"/></svg></div>
+                        </div>
+                        <div class="t-style-lbl">Minimal</div>
+                      </div>
+                    </div>
+                    <!-- Card 3: Neon -->
+                    <div class="t-card t-card-neon" id="tCard2">
+                      <div class="t-card-inner">
+                        <div class="t-card-neon-border"></div>
+                        <div class="t-card-neon-text">DIGITAL<br>FUTURE</div>
+                        <div class="t-card-neon-sub">Next Gen Studio</div>
+                        <div class="t-card-hover">
+                          <div class="t-card-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v10M1 6h10"/></svg></div>
+                          <div class="t-card-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2l8 8M10 2l-8 8"/></svg></div>
+                        </div>
+                        <div class="t-style-lbl">Neon</div>
+                      </div>
+                    </div>
+                    <!-- Card 4: Retro -->
+                    <div class="t-card t-card-retro" id="tCard3">
+                      <div class="t-card-inner">
+                        <div class="t-card-retro-border"></div>
+                        <div class="t-card-retro-text">Vintage<br>Craft Co.</div>
+                        <div class="t-card-retro-sub">Since MCMXCIX</div>
+                        <div class="t-card-hover">
+                          <div class="t-card-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v10M1 6h10"/></svg></div>
+                        </div>
+                        <div class="t-style-lbl">Retro</div>
+                      </div>
+                    </div>
+                    <!-- Card 5: Elegant -->
+                    <div class="t-card t-card-elegant" id="tCard4">
+                      <div class="t-card-inner">
+                        <div class="t-card-elegant-text">Maison<br>Lumière</div>
+                        <div class="t-card-elegant-accent"></div>
+                        <div class="t-card-elegant-sub">Luxury Interiors</div>
+                        <div class="t-card-hover">
+                          <div class="t-card-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v10M1 6h10"/></svg></div>
+                        </div>
+                        <div class="t-style-lbl">Elegant</div>
+                      </div>
+                    </div>
+                    <!-- Card 6: Corporate -->
+                    <div class="t-card t-card-corp" id="tCard5">
+                      <div class="t-card-inner">
+                        <div class="t-card-corp-bar"></div>
+                        <div class="t-card-corp-text">NEXUS<br>GROUP</div>
+                        <div class="t-card-corp-sub">Global Solutions</div>
+                        <div class="t-card-corp-tag">Enterprise</div>
+                        <div class="t-card-hover">
+                          <div class="t-card-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1v10M1 6h10"/></svg></div>
+                        </div>
+                        <div class="t-style-lbl">Corporate</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="t-rpanel">
+                    <div class="t-rp-tabs">
+                      <div class="t-rp-tab active" id="tRpTab0">Content</div>
+                      <div class="t-rp-tab" id="tRpTab1">Style</div>
+                      <div class="t-rp-tab" id="tRpTab2">Export</div>
+                    </div>
+                    <div class="t-rp-body" id="tRpBody">
+                      <!-- Content Tab -->
+                      <div id="tRpContent">
+                        <div class="t-rp-section">
+                          <div class="t-rp-label">Business Name</div>
+                          <div class="t-rp-input">Creative Studio</div>
+                        </div>
+                        <div class="t-rp-section">
+                          <div class="t-rp-label">Tagline</div>
+                          <div class="t-rp-input">Design · Build · Launch</div>
+                        </div>
+                        <div class="t-rp-section">
+                          <div class="t-rp-label">Category Tags</div>
+                          <div class="t-rp-tags">
+                            <span class="t-rp-tag active">Design</span>
+                            <span class="t-rp-tag active">Studio</span>
+                            <span class="t-rp-tag">Agency</span>
+                            <span class="t-rp-tag">Creative</span>
+                            <span class="t-rp-tag">Brand</span>
+                          </div>
+                        </div>
+                        <div class="t-rp-section">
+                          <div class="t-rp-label">Design Style</div>
+                          <div class="t-styles-grid">
+                            <div class="t-style-chip active">Bold</div>
+                            <div class="t-style-chip">Minimal</div>
+                            <div class="t-style-chip">Neon</div>
+                            <div class="t-style-chip">Retro</div>
+                            <div class="t-style-chip">Elegant</div>
+                            <div class="t-style-chip">Corp</div>
+                          </div>
+                        </div>
+                        <div class="t-rp-section">
+                          <div class="t-rp-label">Accent Color</div>
+                          <div class="t-color-row">
+                            <div class="t-color-dot sel" style="background:#FF3CAC"></div>
+                            <div class="t-color-dot" style="background:#00F5D4"></div>
+                            <div class="t-color-dot" style="background:#F9C859"></div>
+                            <div class="t-color-dot" style="background:#2B86C5"></div>
+                            <div class="t-color-dot" style="background:#4ADE80"></div>
+                          </div>
+                        </div>
+                        <div class="t-rp-section">
+                          <div class="t-rp-label">Overlay Opacity</div>
+                          <input type="range" class="t-rp-slider" min="0" max="100" value="60" style="width:100%"/>
+                        </div>
+                        <div class="t-rp-section">
+                          <div class="t-rp-toggle-row">
+                            <span class="t-rp-toggle-lbl">Noise Texture</span>
+                            <div class="t-rp-toggle on"></div>
+                          </div>
+                          <div class="t-rp-toggle-row">
+                            <span class="t-rp-toggle-lbl">Vignette</span>
+                            <div class="t-rp-toggle"></div>
+                          </div>
+                          <div class="t-rp-toggle-row">
+                            <span class="t-rp-toggle-lbl">Border Frame</span>
+                            <div class="t-rp-toggle on"></div>
+                          </div>
+                        </div>
+                        <div class="t-gen-btn-big">
+                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,1 9,6 5,11 1,6"/></svg>
+                          Ctrl+G · Generate All
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Generate Spinner overlay -->
+                  <div class="t-spinner" id="tSpinner">
+                    <div class="t-spinner-rings">
+                      <div class="t-ring t-ring-1"></div>
+                      <div class="t-ring t-ring-2"></div>
+                      <div class="t-ring t-ring-3"></div>
+                    </div>
+                    <div class="t-spinner-txt">Generating designs…</div>
+                    <div class="t-progress-bar-wrap"><div class="t-progress-bar" id="tProgressBar"></div></div>
+                  </div>
+                </div><!-- /tSc0 -->
+
+                <!-- Screen 1: Fonts tab open -->
+                <div class="screen" id="tSc1" style="flex-direction:row">
+                  <div class="t-sidebar">
+                    <div class="t-sib-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg><span class="t-sib-lbl">BG</span></div>
+                    <div class="t-sib-tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h10M4 17h12"/></svg><span class="t-sib-lbl">Fonts</span></div>
+                    <div class="t-sib-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg><span class="t-sib-lbl">Palette</span></div>
+                    <div class="t-sib-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span class="t-sib-lbl">Categ</span></div>
+                    <div class="t-sib-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg><span class="t-sib-lbl">Logo</span></div>
+                  </div>
+                  <div class="t-side-panel">
+                    <div class="t-side-panel-header">
+                      <div class="t-side-panel-title">Fonts</div>
+                      <input class="t-side-search" placeholder="Search fonts..."/>
+                    </div>
+                    <div class="t-side-panel-body">
+                      <div class="t-font-list">
+                        <div class="t-font-item active">
+                          <div class="t-font-name" style="font-family:'Bebas Neue',sans-serif;letter-spacing:.05em">Bebas Neue</div>
+                          <div class="t-font-preview">Display · Bold</div>
+                        </div>
+                        <div class="t-font-item">
+                          <div class="t-font-name" style="font-family:'Cormorant Garamond',serif;font-style:italic">Cormorant Garamond</div>
+                          <div class="t-font-preview">Serif · Elegant</div>
+                        </div>
+                        <div class="t-font-item">
+                          <div class="t-font-name" style="font-family:'DM Sans',sans-serif;font-weight:700">DM Sans</div>
+                          <div class="t-font-preview">Sans · Modern</div>
+                        </div>
+                        <div class="t-font-item">
+                          <div class="t-font-name" style="font-family:'Nunito',sans-serif;font-weight:900">Nunito</div>
+                          <div class="t-font-preview">Sans · Friendly</div>
+                        </div>
+                        <div class="t-font-item">
+                          <div class="t-font-name" style="font-family:monospace">Space Mono</div>
+                          <div class="t-font-preview">Mono · Technical</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="t-canvas col3">
+                    <div class="t-card t-card-bold"><div class="t-card-inner"><div class="t-card-bold-text">CREATIVE<br>STUDIO</div><div class="t-card-bold-sub">Design · Build · Launch</div><div class="t-style-lbl">Bold</div></div></div>
+                    <div class="t-card t-card-minimal"><div class="t-card-inner"><div class="t-card-minimal-text">Where ideas<br>become reality</div><div class="t-card-minimal-line"></div><div class="t-card-minimal-sub">Est. 2024</div><div class="t-style-lbl">Minimal</div></div></div>
+                    <div class="t-card t-card-neon"><div class="t-card-inner"><div class="t-card-neon-border"></div><div class="t-card-neon-text">DIGITAL<br>FUTURE</div><div class="t-card-neon-sub">Next Gen Studio</div><div class="t-style-lbl">Neon</div></div></div>
+                    <div class="t-card t-card-retro"><div class="t-card-inner"><div class="t-card-retro-border"></div><div class="t-card-retro-text">Vintage<br>Craft Co.</div><div class="t-card-retro-sub">Since MCMXCIX</div><div class="t-style-lbl">Retro</div></div></div>
+                    <div class="t-card t-card-elegant"><div class="t-card-inner"><div class="t-card-elegant-text">Maison<br>Lumière</div><div class="t-card-elegant-accent"></div><div class="t-card-elegant-sub">Luxury Interiors</div><div class="t-style-lbl">Elegant</div></div></div>
+                    <div class="t-card t-card-corp"><div class="t-card-inner"><div class="t-card-corp-bar"></div><div class="t-card-corp-text">NEXUS<br>GROUP</div><div class="t-card-corp-sub">Global Solutions</div><div class="t-card-corp-tag">Enterprise</div><div class="t-style-lbl">Corp</div></div></div>
+                  </div>
+                  <div class="t-rpanel">
+                    <div class="t-rp-tabs"><div class="t-rp-tab active">Content</div><div class="t-rp-tab">Style</div><div class="t-rp-tab">Export</div></div>
+                    <div class="t-rp-body">
+                      <div class="t-rp-section"><div class="t-rp-label">Business Name</div><div class="t-rp-input">Creative Studio</div></div>
+                      <div class="t-rp-section"><div class="t-rp-label">Tagline</div><div class="t-rp-input">Design · Build · Launch</div></div>
+                      <div class="t-rp-section"><div class="t-rp-label">Design Style</div><div class="t-styles-grid"><div class="t-style-chip active">Bold</div><div class="t-style-chip">Minimal</div><div class="t-style-chip">Neon</div><div class="t-style-chip">Retro</div><div class="t-style-chip">Elegant</div><div class="t-style-chip">Corp</div></div></div>
+                      <div class="t-gen-btn-big" style="margin-top:auto"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5,1 9,6 5,11 1,6"/></svg>Generate All</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Screen 2: Stats Dashboard -->
+                <div class="screen" id="tSc2" style="flex-direction:column">
+                  <div style="height:36px;min-height:36px;background:#0B0B10;border-bottom:1px solid #1E1E2E;display:flex;align-items:center;padding:0 12px;gap:8px">
+                    <span style="font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.08em;background:linear-gradient(135deg,#FF3CAC,#784BA0,#2B86C5);-webkit-background-clip:text;background-clip:text;color:transparent">TEMPLIX</span>
+                    <span style="font-size:.6rem;color:#5A5A7A;margin-left:4px">/ Stats</span>
+                    <div style="margin-left:auto;display:flex;gap:5px">
+                      <div style="padding:3px 8px;border-radius:999px;background:rgba(255,60,172,.1);border:1px solid rgba(255,60,172,.2);font-size:.54rem;color:#FF3CAC;font-weight:600">This Month</div>
+                    </div>
+                  </div>
+                  <div style="flex:1;overflow:hidden;padding:10px;display:flex;flex-direction:column;gap:8px;background:#060609">
+                    <div class="t-stats-grid">
+                      <div class="t-stat-card"><div class="t-stat-card-label">Designs Created</div><div class="t-stat-card-val">247</div><div class="t-stat-card-sub">↑ 38 this week</div></div>
+                      <div class="t-stat-card"><div class="t-stat-card-label">Templates Used</div><div class="t-stat-card-val neon">18</div><div class="t-stat-card-sub">of 25 available</div></div>
+                      <div class="t-stat-card"><div class="t-stat-card-label">Exports</div><div class="t-stat-card-val gold">94</div><div class="t-stat-card-sub">PNG · PDF · SVG</div></div>
+                      <div class="t-stat-card"><div class="t-stat-card-label">Saved Designs</div><div class="t-stat-card-val blue">31</div><div class="t-stat-card-sub">in your library</div></div>
+                    </div>
+                    <div style="background:#0B0B10;border:1px solid #1E1E2E;border-radius:9px;padding:10px;flex:1;min-height:0;display:flex;flex-direction:column;">
+                      <div style="font-size:.6rem;font-weight:700;color:#A8A8C8;margin-bottom:8px;flex-shrink:0">Style Popularity</div>
+                      <div style="flex:1;display:flex;flex-direction:column;gap:5px;justify-content:space-around">
+                        <div style="display:flex;align-items:center;gap:8px">
+                          <div style="font-size:.56rem;color:#5A5A7A;width:52px;flex-shrink:0">Bold</div>
+                          <div style="flex:1;height:5px;border-radius:3px;background:#1E1E2E;overflow:hidden"><div style="width:78%;height:100%;background:linear-gradient(90deg,#FF3CAC,#784BA0);border-radius:3px"></div></div>
+                          <div style="font-size:.56rem;color:#FF3CAC;flex-shrink:0">78%</div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px">
+                          <div style="font-size:.56rem;color:#5A5A7A;width:52px;flex-shrink:0">Minimal</div>
+                          <div style="flex:1;height:5px;border-radius:3px;background:#1E1E2E;overflow:hidden"><div style="width:54%;height:100%;background:linear-gradient(90deg,#00F5D4,#2B86C5);border-radius:3px"></div></div>
+                          <div style="font-size:.56rem;color:#00F5D4;flex-shrink:0">54%</div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px">
+                          <div style="font-size:.56rem;color:#5A5A7A;width:52px;flex-shrink:0">Neon</div>
+                          <div style="flex:1;height:5px;border-radius:3px;background:#1E1E2E;overflow:hidden"><div style="width:41%;height:100%;background:linear-gradient(90deg,#00F5D4,#00F5D488);border-radius:3px"></div></div>
+                          <div style="font-size:.56rem;color:#00F5D4;flex-shrink:0">41%</div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px">
+                          <div style="font-size:.56rem;color:#5A5A7A;width:52px;flex-shrink:0">Elegant</div>
+                          <div style="flex:1;height:5px;border-radius:3px;background:#1E1E2E;overflow:hidden"><div style="width:33%;height:100%;background:linear-gradient(90deg,#F9C859,#FB923C);border-radius:3px"></div></div>
+                          <div style="font-size:.56rem;color:#F9C859;flex-shrink:0">33%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div><!-- /screens -->
+
+              <!-- Templix Cursor -->
+              <svg class="demo-cursor" id="templixCursor" viewBox="0 0 18 22" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 2L2 18L6.5 13.5L9.5 20L11.5 19L8.5 12L14 12Z" fill="white" stroke="#111" stroke-width=".8"/>
+              </svg>
+              <div class="demo-ripple" id="templixRipple" style="border-color:rgba(255,60,172,.7)"></div>
+
+            </div><!-- /inner flex -->
+          </div><!-- /browser-body -->
+        </div><!-- /browser -->
+
+        <!-- TEMPLIX Tabs -->
+        <div class="demo-tabs" id="templixTabs">
+          <button class="dtab active" onclick="templixGo(0,this)">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="4" height="4" rx=".6"/><rect x="7" y="1" width="4" height="4" rx=".6"/><rect x="1" y="7" width="4" height="4" rx=".6"/><rect x="7" y="7" width="4" height="4" rx=".6"/></svg>
+            Studio
+          </button>
+          <button class="dtab" onclick="templixGo(1,this)">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h8M2 8h6"/></svg>
+            Font Browser
+          </button>
+          <button class="dtab" onclick="templixGo(2,this)">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="1,9 3,5 5,7 7,3 9,6 11,4"/></svg>
+            Stats
+          </button>
+        </div>
+
+</div></div>
+`;
+
+const PS_SLIDE_HTML = `
+<div class="ppl-stage"><div class="ppl-stage-inner">
+  <div class="browser" id="psBrowser">
+    <div class="browser-chrome" style="background:#120c05">
+      <div class="chrome-dots">
+        <div class="chrome-dot r"></div><div class="chrome-dot y"></div><div class="chrome-dot g"></div>
+      </div>
+      <div class="chrome-url">
+        <svg class="chrome-url-lock" viewBox="0 0 12 12" fill="none" stroke="#665" stroke-width="1.2"><rect x="2" y="5" width="8" height="6" rx="1"/><path d="M4 5V3.5a2 2 0 014 0V5"/></svg>
+        <span style="font-size:.66rem;color:#665;flex:1">app.peacespot.ng</span>
+      </div>
+    </div>
+    <div class="browser-body">
+      <div class="ps-screen active" id="psSc0">
+        <div class="ps-signin">
+          <div class="ps-signin-card">
+            <div class="ps-logo"><span class="ps-logo-dot"></span>PeaceSpot</div>
+            <div class="ps-signin-sub">Staff sign in</div>
+            <div class="ps-field-label">Email</div>
+            <div class="ps-input" id="psEmailInput">&nbsp;</div>
+            <div class="ps-field-label">Password</div>
+            <div class="ps-input" id="psPassInput">&nbsp;</div>
+            <button class="ps-btn" id="psSubmitBtn">Sign In</button>
+          </div>
+        </div>
+      </div>
+      <div class="ps-screen" id="psSc1">
+        <div class="ps-shell">
+          <div class="ps-sidebar">
+            <div class="ps-side-logo">🍽 PeaceSpot</div>
+            <div class="ps-nav-item active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6h12"/></svg>Orders</div>
+            <div class="ps-nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Tables</div>
+            <div class="ps-nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 2h10l-1 12H4L3 2z"/><path d="M6 5h4"/></svg>Menu</div>
+            <div class="ps-nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 13l3-5 3 3 4-7 2 3"/></svg>Analytics</div>
+          </div>
+          <div class="ps-main">
+            <div class="ps-topbar">
+              <h4>Live Orders</h4>
+              <div class="ps-live"><span class="ps-live-dot"></span>Live · updates every 3s</div>
+            </div>
+            <div class="ps-orders" id="psOrders">
+              <div class="ps-order-card" id="psOrderCard0">
+                <div class="ps-order-top"><span class="ps-order-table">Table 4</span><span class="ps-badge pending">Pending</span></div>
+                <div class="ps-order-items">2× Jollof Rice<br>1× Chapman</div>
+              </div>
+              <div class="ps-order-card"><div class="ps-order-top"><span class="ps-order-table">Table 7</span><span class="ps-badge preparing">Preparing</span></div><div class="ps-order-items">1× Suya Platter<br>2× Zobo</div></div>
+              <div class="ps-order-card"><div class="ps-order-top"><span class="ps-order-table">Table 2</span><span class="ps-badge ready">Ready</span></div><div class="ps-order-items">1× Pepper Soup<br>1× Water</div></div>
+              <div class="ps-order-card"><div class="ps-order-top"><span class="ps-order-table">Table 9</span><span class="ps-badge pending">Pending</span></div><div class="ps-order-items">3× Meat Pie<br>1× Chapman</div></div>
+              <div class="ps-order-card"><div class="ps-order-top"><span class="ps-order-table">Table 1</span><span class="ps-badge preparing">Preparing</span></div><div class="ps-order-items">2× Fried Rice<br>2× Fanta</div></div>
+              <div class="ps-order-card"><div class="ps-order-top"><span class="ps-order-table">Table 11</span><span class="ps-badge ready">Ready</span></div><div class="ps-order-items">1× Amala Combo</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ps-screen" id="psSc2">
+        <div class="ps-shell">
+          <div class="ps-sidebar">
+            <div class="ps-side-logo">🍽 PeaceSpot</div>
+            <div class="ps-nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6h12"/></svg>Orders</div>
+            <div class="ps-nav-item active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Tables</div>
+            <div class="ps-nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 2h10l-1 12H4L3 2z"/><path d="M6 5h4"/></svg>Menu</div>
+            <div class="ps-nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 13l3-5 3 3 4-7 2 3"/></svg>Analytics</div>
+          </div>
+          <div class="ps-main">
+            <div class="ps-topbar"><h4>Tables</h4><div class="ps-live"><span class="ps-live-dot"></span>12 tables</div></div>
+            <div class="ps-tables-grid">
+              <div class="ps-table-cell occupied"><b>T1</b>Occupied</div>
+              <div class="ps-table-cell avail"><b>T2</b>Free</div>
+              <div class="ps-table-cell reserved"><b>T3</b>Reserved</div>
+              <div class="ps-table-cell occupied"><b>T4</b>Occupied</div>
+              <div class="ps-table-cell avail"><b>T5</b>Free</div>
+              <div class="ps-table-cell avail"><b>T6</b>Free</div>
+              <div class="ps-table-cell occupied"><b>T7</b>Occupied</div>
+              <div class="ps-table-cell avail"><b>T8</b>Free</div>
+              <div class="ps-table-cell occupied"><b>T9</b>Occupied</div>
+              <div class="ps-table-cell reserved"><b>T10</b>Reserved</div>
+              <div class="ps-table-cell occupied"><b>T11</b>Occupied</div>
+              <div class="ps-table-cell avail"><b>T12</b>Free</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ps-screen" id="psSc3">
+        <div class="ps-shell">
+          <div class="ps-sidebar">
+            <div class="ps-side-logo">🍽 PeaceSpot</div>
+            <div class="ps-nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6h12"/></svg>Orders</div>
+            <div class="ps-nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Tables</div>
+            <div class="ps-nav-item active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 2h10l-1 12H4L3 2z"/><path d="M6 5h4"/></svg>Menu</div>
+            <div class="ps-nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 13l3-5 3 3 4-7 2 3"/></svg>Analytics</div>
+          </div>
+          <div class="ps-main">
+            <div class="ps-topbar"><h4>Menu</h4><div class="ps-live"><span class="ps-live-dot"></span>24 items</div></div>
+            <div class="ps-menu-list">
+              <div class="ps-menu-row"><div><div class="ps-menu-name">Jollof Rice</div><div class="ps-menu-sub">Rice · Signature</div></div><div style="display:flex;align-items:center"><span class="ps-menu-price">₦3,500</span><div class="ps-toggle on"><div class="ps-toggle-knob"></div></div></div></div>
+              <div class="ps-menu-row"><div><div class="ps-menu-name">Suya Platter</div><div class="ps-menu-sub">Grill · Spicy</div></div><div style="display:flex;align-items:center"><span class="ps-menu-price">₦5,200</span><div class="ps-toggle on" id="psToggle1"><div class="ps-toggle-knob"></div></div></div></div>
+              <div class="ps-menu-row"><div><div class="ps-menu-name">Pepper Soup</div><div class="ps-menu-sub">Soup · Spicy</div></div><div style="display:flex;align-items:center"><span class="ps-menu-price">₦4,000</span><div class="ps-toggle on"><div class="ps-toggle-knob"></div></div></div></div>
+              <div class="ps-menu-row"><div><div class="ps-menu-name">Meat Pie</div><div class="ps-menu-sub">Snacks · Pastry</div></div><div style="display:flex;align-items:center"><span class="ps-menu-price">₦1,200</span><div class="ps-toggle on"><div class="ps-toggle-knob"></div></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-cursor" id="psCursor">
+        <svg viewBox="0 0 24 24" fill="white" stroke="black" stroke-width="1"><path d="M4 2l14 8-6 2-2 6z"/></svg>
+      </div>
+      <div class="demo-ripple" id="psRipple"></div>
+    </div>
+  </div>
+  <div class="demo-tabs" id="psTabs">
+    <button class="dtab active" onclick="peaceSpotGo(0,this)">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="8" height="6" rx="1"/><path d="M4 4V3a2 2 0 014 0v1"/></svg>
+      Sign In
+    </button>
+    <button class="dtab" onclick="peaceSpotGo(1,this)">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="2.5" width="9" height="7.5" rx="1"/><path d="M1.5 5h9"/></svg>
+      Orders
+    </button>
+    <button class="dtab" onclick="peaceSpotGo(2,this)">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="1.5" width="4" height="4" rx="0.5"/><rect x="6.5" y="1.5" width="4" height="4" rx="0.5"/><rect x="1.5" y="6.5" width="4" height="4" rx="0.5"/><rect x="6.5" y="6.5" width="4" height="4" rx="0.5"/></svg>
+      Tables
+    </button>
+    <button class="dtab" onclick="peaceSpotGo(3,this)">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 1.5h8l-1 9H3L2 1.5z"/></svg>
+      Menu
+    </button>
+  </div>
+</div></div>
+
+`;
+
+const PK_SLIDE_HTML = `
+<div class="ppl-stage"><div class="ppl-stage-inner">
+  <div class="pk-wrap">
+    <div class="pk-phone">
+      <div class="pk-notch"></div>
+
+      <div class="pk-screen active" id="pkSc0">
+        <div class="pk-topbar">
+          <div class="pk-brand">PIKA<span>BOO</span></div>
+          <div class="pk-icon-btn"><svg viewBox="0 0 16 16" fill="none" stroke="#84cc16" stroke-width="1.4"><path d="M2 5h4l1-2h4l1 2h2v8H2V5z"/><circle cx="8" cy="9" r="2.3"/></svg></div>
+        </div>
+        <div class="pk-stories">
+          <div class="pk-story"><div class="pk-story-ring"><div class="pk-story-avatar" style="background:linear-gradient(135deg,#84cc16,#365314)"></div></div><span class="pk-story-name">Zara</span></div>
+          <div class="pk-story"><div class="pk-story-ring"><div class="pk-story-avatar" style="background:linear-gradient(135deg,#a3e635,#3f6212)"></div></div><span class="pk-story-name">Kome</span></div>
+          <div class="pk-story"><div class="pk-story-ring"><div class="pk-story-avatar" style="background:linear-gradient(135deg,#65a30d,#1a2e05)"></div></div><span class="pk-story-name">Tobi</span></div>
+          <div class="pk-story"><div class="pk-story-ring"><div class="pk-story-avatar" style="background:linear-gradient(135deg,#bef264,#4d7c0f)"></div></div><span class="pk-story-name">Ada</span></div>
+        </div>
+        <div class="pk-feed-scroll">
+          <div class="pk-post" id="pkPost0">
+            <div class="pk-post-head">
+              <div class="pk-post-avatar" style="background:linear-gradient(135deg,#84cc16,#3f6212)"></div>
+              <div><div class="pk-post-name">Zara.pika</div><div class="pk-post-time">12m ago</div></div>
+            </div>
+            <div class="pk-post-media" style="background:linear-gradient(135deg,#1a2e05,#365314,#4d7c0f)"></div>
+            <div class="pk-post-actions">
+              <svg class="pk-heart" id="pkHeart0" viewBox="0 0 16 16" fill="none" stroke="#c4cbc0" stroke-width="1.4"><path d="M8 13.5S2 10 2 6a3 3 0 015.5-1.7A3 3 0 0114 6c0 4-6 7.5-6 7.5z"/></svg>
+              <svg viewBox="0 0 16 16" fill="none" stroke="#c4cbc0" stroke-width="1.4"><path d="M2 3h12v8H6l-4 3V3z"/></svg>
+              <svg viewBox="0 0 16 16" fill="none" stroke="#c4cbc0" stroke-width="1.4"><path d="M2 8l12-6-4 12-3-5-5-1z"/></svg>
+            </div>
+            <div class="pk-post-caption">See & be seen 🐾 — golden hour in Lekki</div>
+          </div>
+          <div class="pk-post">
+            <div class="pk-post-head">
+              <div class="pk-post-avatar" style="background:linear-gradient(135deg,#a3e635,#1a2e05)"></div>
+              <div><div class="pk-post-name">Tobi_pk</div><div class="pk-post-time">1h ago</div></div>
+            </div>
+            <div class="pk-post-media" style="background:linear-gradient(135deg,#365314,#84cc16,#1a2e05)"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pk-screen" id="pkSc1">
+        <div class="pk-explore-head">Explore</div>
+        <div class="pk-explore-grid" id="pkExploreGrid">
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#1a2e05,#4d7c0f)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#365314,#84cc16)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#3f6212,#1a2e05)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#4d7c0f,#a3e635)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#1a2e05,#365314)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#84cc16,#3f6212)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#365314,#1a2e05)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#a3e635,#4d7c0f)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#1a2e05,#84cc16)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#4d7c0f,#365314)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#3f6212,#a3e635)"></div>
+          <div class="pk-explore-tile" style="background:linear-gradient(135deg,#1a2e05,#4d7c0f)"></div>
+        </div>
+      </div>
+
+      <div class="pk-screen" id="pkSc2">
+        <div class="pk-profile-cover" style="background:linear-gradient(135deg,#365314,#84cc16,#1a2e05)"></div>
+        <div class="pk-profile-info">
+          <div class="pk-profile-avatar" style="background:linear-gradient(135deg,#84cc16,#1a2e05); box-shadow:0 4px 14px rgba(0,0,0,.4)"></div>
+          <div class="pk-profile-name">Zara.pika</div>
+          <div class="pk-profile-handle">@zarapika · Lagos</div>
+          <div class="pk-profile-stats">
+            <div class="pk-profile-stat"><b id="pkPosts">128</b><span>Posts</span></div>
+            <div class="pk-profile-stat"><b id="pkFollowers">4.2K</b><span>Followers</span></div>
+            <div class="pk-profile-stat"><b>310</b><span>Following</span></div>
+          </div>
+        </div>
+        <div class="pk-profile-grid">
+          <div class="pk-profile-tile" style="background:linear-gradient(135deg,#1a2e05,#4d7c0f)"></div>
+          <div class="pk-profile-tile" style="background:linear-gradient(135deg,#365314,#84cc16)"></div>
+          <div class="pk-profile-tile" style="background:linear-gradient(135deg,#3f6212,#1a2e05)"></div>
+          <div class="pk-profile-tile" style="background:linear-gradient(135deg,#4d7c0f,#a3e635)"></div>
+          <div class="pk-profile-tile" style="background:linear-gradient(135deg,#1a2e05,#365314)"></div>
+          <div class="pk-profile-tile" style="background:linear-gradient(135deg,#84cc16,#3f6212)"></div>
+        </div>
+      </div>
+
+      <div class="pk-bottom-nav">
+        <div style="display:flex;flex-direction:column;align-items:center"><svg class="pk-nav-icon active" id="pkNav0" viewBox="0 0 16 16" fill="none" stroke="#84cc16" stroke-width="1.5"><path d="M2 8l6-5 6 5v6H2V8z"/></svg><span class="pk-nav-dot active" id="pkDot0"></span></div>
+        <div style="display:flex;flex-direction:column;align-items:center"><svg class="pk-nav-icon" id="pkNav1" viewBox="0 0 16 16" fill="none" stroke="#c4cbc0" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 8l3-3"/></svg><span class="pk-nav-dot" id="pkDot1"></span></div>
+        <div style="display:flex;flex-direction:column;align-items:center"><svg viewBox="0 0 16 16" fill="none" stroke="#c4cbc0" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="3"/><path d="M8 5v6M5 8h6"/></svg></div>
+        <div style="display:flex;flex-direction:column;align-items:center"><svg viewBox="0 0 16 16" fill="none" stroke="#c4cbc0" stroke-width="1.5"><path d="M3 3h10v9l-5-3-5 3V3z"/></svg></div>
+        <div style="display:flex;flex-direction:column;align-items:center"><svg class="pk-nav-icon" id="pkNav2" viewBox="0 0 16 16" fill="none" stroke="#c4cbc0" stroke-width="1.5"><circle cx="8" cy="5.5" r="2.8"/><path d="M2.5 14c1-3 3.2-4.5 5.5-4.5s4.5 1.5 5.5 4.5"/></svg><span class="pk-nav-dot" id="pkDot2"></span></div>
+      </div>
+
+      <div class="demo-cursor" id="pkCursor">
+        <svg viewBox="0 0 24 24" fill="white" stroke="black" stroke-width="1"><path d="M4 2l14 8-6 2-2 6z"/></svg>
+      </div>
+      <div class="demo-ripple" id="pkRipple"></div>
+    </div>
+  </div>
+  <div class="demo-tabs" id="pkTabs">
+    <button class="dtab active" onclick="pikabooGo(0,this)">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 6l4.5-3.7 4.5 3.7v4.5h-9V6z"/></svg>
+      Feed
+    </button>
+    <button class="dtab" onclick="pikabooGo(1,this)">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5.5" cy="5.5" r="4"/><path d="M8.3 8.3l2.2 2.2"/></svg>
+      Explore
+    </button>
+    <button class="dtab" onclick="pikabooGo(2,this)">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="4" r="2"/><path d="M2 10c.8-2.3 2.3-3.3 4-3.3S9.2 7.7 10 10"/></svg>
+      Profile
+    </button>
+  </div>
+</div></div>
+
+`;
+
+/* ══════════════════════════════════════════
+   SLIDESHOW — "See our work" panel
+══════════════════════════════════════════ */
+const PP_SLIDES = [
+  {
+    type:"live", demo:EmolDemo, name:"EMOL", desc:"AI-powered email outreach dashboard — live walkthrough",
+    body: EMOL_SLIDE_HTML
+  },
+  {
+    type:"live", demo:PeaceSpotDemo, name:"Peace Spot", desc:"Restaurant ordering system — live walkthrough",
+    body: PS_SLIDE_HTML
+  },
+  {
+    type:"live", demo:PikabooDemo, name:"PIKABOO", desc:"Social app rebuild — lime & black theme — live walkthrough",
+    body: PK_SLIDE_HTML
+  },
+  {
+    type:"live", demo:TemplixDemo, name:"Templix", desc:"Flutter design-studio app — live walkthrough",
+    body: TEMPLIX_SLIDE_HTML
+  }
+];
+let ppIndex = 0, ppTimeouts = [];
+
+function ppBuild(){
+  document.getElementById("pp-track").innerHTML = PP_SLIDES.map((s, i) => {
+    const body = s.type === "live"
+      ? s.body
+      : `<img src="${s.src}" alt="${s.name} screenshot" loading="lazy">`;
+    const cursorHtml = s.type === "live" ? "" : `
+        <div class="pp-cursor" id="pp-cursor-${i}">
+          <svg viewBox="0 0 24 24" fill="white" stroke="black" stroke-width="1"><path d="M4 2l14 8-6 2-2 6z"/></svg>
+          <div class="pp-click-ring"></div>
+        </div>
+        <div class="pp-tap-label" id="pp-label-${i}"></div>`;
+    // Live slides show their own branding in the browser chrome/logo already —
+    // a caption overlay would collide with the demo-tabs row at that scale.
+    const caption = s.type === "live"
+      ? ""
+      : `<div class="pp-slide-caption"><b>${s.name}</b><span>${s.desc}</span></div>`;
+    return `
+      <div class="pp-slide${i === 0 ? " active" : ""}"${s.type === "live" ? " data-live" : ""} data-i="${i}">
+        ${body}${cursorHtml}
+        ${caption}
+      </div>`;
+  }).join("");
+  document.getElementById("pp-dots").innerHTML = PP_SLIDES.map((s, i) => `
+    <div class="pp-dot${i === 0 ? " active" : ""}" onclick="ppGo(${i})"></div>`).join("");
+}
+
+function ppClearTimeouts(){
+  ppTimeouts.forEach(t => clearTimeout(t));
+  ppTimeouts = [];
+}
+
+function ppPlaySlide(i){
+  ppClearTimeouts();
+  EmolDemo.stop();
+  TemplixDemo.stop();
+  const slide = PP_SLIDES[i];
+
+  if (slide.type === "live"){
+    slide.demo.play(() => ppGo(i + 1, true));
+    return;
+  }
+
+  const cursor = document.getElementById("pp-cursor-" + i);
+  const label = document.getElementById("pp-label-" + i);
+  const ring = cursor ? cursor.querySelector(".pp-click-ring") : null;
+  if (!cursor) return;
+
+  const first = slide.waypoints[0];
+  cursor.style.left = first.x + "%";
+  cursor.style.top = first.y + "%";
+
+  let t = 250;
+  ppTimeouts.push(setTimeout(() => cursor.classList.add("visible"), t));
+
+  slide.waypoints.forEach((wp) => {
+    ppTimeouts.push(setTimeout(() => {
+      cursor.style.left = wp.x + "%";
+      cursor.style.top = wp.y + "%";
+      label.textContent = wp.label;
+      label.style.left = wp.x + "%";
+      label.style.top = wp.y + "%";
+    }, t));
+
+    const arriveAt = t + 900;
+    ppTimeouts.push(setTimeout(() => {
+      label.classList.add("visible");
+      if (ring){ ring.classList.remove("ping"); void ring.offsetWidth; ring.classList.add("ping"); }
+    }, arriveAt));
+    ppTimeouts.push(setTimeout(() => label.classList.remove("visible"), arriveAt + 900));
+
+    t = arriveAt + 1000;
+  });
+
+  ppTimeouts.push(setTimeout(() => cursor.classList.remove("visible"), t));
+  ppTimeouts.push(setTimeout(() => ppGo(i + 1, true), t + 500));
+}
+
+function ppGo(i, auto){
+  ppClearTimeouts();
+  EmolDemo.stop();
+  TemplixDemo.stop();
+  const prevCursor = document.getElementById("pp-cursor-" + ppIndex);
+  if (prevCursor) prevCursor.classList.remove("visible");
+  ppIndex = (i + PP_SLIDES.length) % PP_SLIDES.length;
+  document.querySelectorAll(".pp-slide").forEach(el => el.classList.toggle("active", +el.dataset.i === ppIndex));
+  document.querySelectorAll(".pp-dot").forEach((el, i2) => el.classList.toggle("active", i2 === ppIndex));
+  ppPlaySlide(ppIndex);
+}
+function ppMove(dir){ ppGo(ppIndex + dir); }
+
+/* The EMOL/Templix demos are built at a fixed 900x562 design size (they
+   were originally full desktop sections). Rather than trying to reflow
+   their internal grid at small widths, scale the whole stage uniformly
+   to fit whatever width the slideshow card is actually rendered at —
+   same idea as a responsive video/iframe embed. */
+function ppScaleStages(){
+  document.querySelectorAll(".ppl-stage").forEach(stage => {
+    const inner = stage.querySelector(".ppl-stage-inner");
+    if (!inner) return;
+    const scale = stage.clientWidth / 900;
+    inner.style.transform = "scale(" + scale + ")";
+  });
+}
+
+ppBuild();
+ppScaleStages();
+setTimeout(() => ppPlaySlide(0), 5300);
+const ppEl = document.querySelector(".pp-slides");
+if (ppEl){
+  ppEl.addEventListener("mouseenter", () => { ppClearTimeouts(); EmolDemo.stop(); TemplixDemo.stop(); });
+  ppEl.addEventListener("mouseleave", () => ppPlaySlide(ppIndex));
+}
+let ppResizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(ppResizeTimer);
+  ppResizeTimer = setTimeout(ppScaleStages, 120);
+});
+
+
+
+</script>
+</body>
+</html>

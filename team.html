@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team — Authentech</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="site-splash">
+  <img src="assets/img/logo.png" alt="Authentech">
+  <div class="splash-word"><span class="grad-text">Authentech</span></div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+<script>
+  (function(){
+    var params = new URLSearchParams(location.search);
+    if (params.get("nav") === "1") {
+      document.body.classList.add("splash-done");
+    }
+    var theme = params.get("theme");
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.setAttribute("data-bs-theme", theme);
+    }
+    if (params.has("nav") || params.has("theme")) {
+      history.replaceState(null, "", location.pathname);
+    }
+  })();
+</script>
+
+<div class="sidebar" id="sidebar-root"></div>
+<div class="mobile-bottombar" id="mobile-bottombar-root"></div>
+
+<div class="main">
+  <div class="mobile-topbar" id="mobile-topbar-root"></div>
+
+  <div class="blob" style="width:300px; height:300px; background:#7c5cff; top:-60px; right:120px;"></div>
+  <div class="blob" style="width:220px; height:220px; background:#c05fe0; top:340px; left:45%;"></div>
+
+  <div class="topline" id="topline-root"></div>
+
+
+  <div class="page-hero">
+    <div class="eyebrow">Our team</div>
+    <h1>The five behind Authentech.</h1>
+    <p>Every project gets matched to the right combination of skills across the team &mdash; not just one person's bandwidth.</p>
+  </div>
+
+  <div class="row g-3">
+
+      <div class="col-md-6 col-lg-4">
+        <div class="team-card">
+          <div class="team-photo"><i class="bi bi-person-fill"></i><img src="assets/img/team/team-1.jpg" alt="Justin" onerror="this.style.display='none'"></div>
+          <h6>Justin</h6>
+          <div class="role">Full-stack Developer</div>
+          <div class="d-flex gap-1 justify-content-center flex-wrap mb-2"><span class="badge-stack">PHP</span><span class="badge-stack">MySQL</span><span class="badge-stack">JS</span><span class="badge-stack">Bootstrap</span></div>
+          <div style="font-size:11.5px; color:var(--text-mute);"><span class="status-dot avail"></span> Available</div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="team-card">
+          <div class="team-photo"><i class="bi bi-person-fill"></i><img src="assets/img/team/team-2.jpg" alt="Developer" onerror="this.style.display='none'"></div>
+          <h6>Developer</h6>
+          <div class="role">Frontend Developer</div>
+          <div class="d-flex gap-1 justify-content-center flex-wrap mb-2"><span class="badge-stack">React</span><span class="badge-stack">Node</span></div>
+          <div style="font-size:11.5px; color:var(--text-mute);"><span class="status-dot busy"></span> In progress</div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="team-card">
+          <div class="team-photo"><i class="bi bi-person-fill"></i><img src="assets/img/team/team-3.jpg" alt="Developer" onerror="this.style.display='none'"></div>
+          <h6>Developer</h6>
+          <div class="role">Backend Developer</div>
+          <div class="d-flex gap-1 justify-content-center flex-wrap mb-2"><span class="badge-stack">Laravel</span><span class="badge-stack">MySQL</span></div>
+          <div style="font-size:11.5px; color:var(--text-mute);"><span class="status-dot avail"></span> Available</div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="team-card">
+          <div class="team-photo"><i class="bi bi-person-fill"></i><img src="assets/img/team/team-4.jpg" alt="Developer" onerror="this.style.display='none'"></div>
+          <h6>Developer</h6>
+          <div class="role">UI/UX Designer</div>
+          <div class="d-flex gap-1 justify-content-center flex-wrap mb-2"><span class="badge-stack">Figma</span><span class="badge-stack">CSS</span></div>
+          <div style="font-size:11.5px; color:var(--text-mute);"><span class="status-dot avail"></span> Available</div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="team-card">
+          <div class="team-photo"><i class="bi bi-person-fill"></i><img src="assets/img/team/team-5.jpg" alt="Developer" onerror="this.style.display='none'"></div>
+          <h6>Developer</h6>
+          <div class="role">Full-stack Developer</div>
+          <div class="d-flex gap-1 justify-content-center flex-wrap mb-2"><span class="badge-stack">Node</span><span class="badge-stack">PostgreSQL</span></div>
+          <div style="font-size:11.5px; color:var(--text-mute);"><span class="status-dot busy"></span> In progress</div>
+        </div>
+      </div>
+  </div>
+
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Authentech &mdash; 5 developers, one vision.</span>
+    <span>Built with HTML, CSS, JS &amp; Bootstrap</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderSidebar("team");
+  renderTopline("3 of 5 devs available now", "Get a free quote", "quote.html");
+  renderMobileTopbar();
+  renderMobileBottomBar("team");
+</script>
+
+</body>
+</html>

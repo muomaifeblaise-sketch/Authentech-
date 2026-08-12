@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Authentech</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="site-splash">
+  <img src="assets/img/logo.png" alt="Authentech">
+  <div class="splash-word"><span class="grad-text">Authentech</span></div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+<script>
+  (function(){
+    var params = new URLSearchParams(location.search);
+    if (params.get("nav") === "1") {
+      document.body.classList.add("splash-done");
+    }
+    var theme = params.get("theme");
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.setAttribute("data-bs-theme", theme);
+    }
+    if (params.has("nav") || params.has("theme")) {
+      history.replaceState(null, "", location.pathname);
+    }
+  })();
+</script>
+
+<div class="sidebar" id="sidebar-root"></div>
+<div class="mobile-bottombar" id="mobile-bottombar-root"></div>
+
+<div class="main">
+  <div class="mobile-topbar" id="mobile-topbar-root"></div>
+
+  <div class="blob" style="width:300px; height:300px; background:#7c5cff; top:-60px; right:120px;"></div>
+  <div class="blob" style="width:220px; height:220px; background:#c05fe0; top:340px; left:45%;"></div>
+
+  <div class="topline" id="topline-root"></div>
+
+
+  <div class="page-hero">
+    <div class="eyebrow">Contact</div>
+    <h1>Let's build your digital home.</h1>
+    <p>Message the whole team, or route your project to a specific developer.</p>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-8">
+      <div class="card h-100">
+        <div class="section-title">Direct contact &amp; routing hub</div>
+        <div class="section-sub">We usually reply within a day</div>
+        <div class="row g-2">
+          <div class="col-md-6"><input class="contact-input" id="c-name" placeholder="Your name"></div>
+          <div class="col-md-6"><input class="contact-input" id="c-email" placeholder="Email"></div>
+          <div class="col-md-6"><input class="contact-input" id="c-business" placeholder="Business name"></div>
+          <div class="col-md-6"><input class="contact-input" id="c-route" placeholder="Route to: All devs &#9662;"></div>
+          <div class="col-12"><input class="contact-input" id="c-details" placeholder="Project details"></div>
+          <div class="col-12 d-flex gap-2 flex-wrap">
+            <button class="btn-grad" onclick="sendContactToWhatsApp()"><i class="bi bi-whatsapp"></i> Send message</button>
+            <a class="btn-ghost" href="tel:+2348079815323"><i class="bi bi-telephone-fill"></i> Call us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="section-title">Other ways to reach us</div>
+        <a class="dev-row" href="mailto:hello@authentech.dev" style="text-decoration:none;"><div class="avatar"><i class="bi bi-envelope"></i></div><div><div style="font-size:13px; font-weight:600; color:var(--text);">Email</div><div style="font-size:12px; color:var(--text-mute);">hello@authentech.dev</div></div></a>
+        <a class="dev-row" href="tel:+2348079815323" style="text-decoration:none;"><div class="avatar"><i class="bi bi-telephone-fill"></i></div><div><div style="font-size:13px; font-weight:600; color:var(--text);">Call</div><div style="font-size:12px; color:var(--text-mute);">+234 807 981 5323</div></div></a>
+        <a class="dev-row" href="https://wa.me/2348079815323" target="_blank" style="text-decoration:none;"><div class="avatar"><i class="bi bi-whatsapp"></i></div><div><div style="font-size:13px; font-weight:600; color:var(--text);">WhatsApp</div><div style="font-size:12px; color:var(--text-mute);">Chat with the team</div></div></a>
+        <a class="dev-row" href="https://instagram.com/authentech" target="_blank" style="text-decoration:none;"><div class="avatar"><i class="bi bi-instagram"></i></div><div><div style="font-size:13px; font-weight:600; color:var(--text);">Instagram</div><div style="font-size:12px; color:var(--text-mute);">@authentech</div></div></a>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Authentech &mdash; 5 developers, one vision.</span>
+    <span>Built with HTML, CSS, JS &amp; Bootstrap</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderSidebar("contact");
+  renderTopline("3 of 5 devs available now", "Get a free quote", "quote.html");
+  renderMobileTopbar();
+  renderMobileBottomBar("contact");
+</script>
+<script>
+  function sendContactToWhatsApp(){
+    const name = document.getElementById("c-name").value.trim();
+    const email = document.getElementById("c-email").value.trim();
+    const business = document.getElementById("c-business").value.trim();
+    const route = document.getElementById("c-route").value.trim();
+    const details = document.getElementById("c-details").value.trim();
+
+    let msg = "Hi Authentech, I'd like to get in touch.\n";
+    if (name) msg += "\nName: " + name;
+    if (business) msg += "\nBusiness: " + business;
+    if (email) msg += "\nEmail: " + email;
+    if (route) msg += "\nRoute to: " + route;
+    if (details) msg += "\n\nDetails: " + details;
+
+    window.open("https://wa.me/2348079815323?text=" + encodeURIComponent(msg), "_blank");
+  }
+</script>
+</body>
+</html>

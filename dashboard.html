@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dev Mode — Authentech</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="site-splash">
+  <img src="assets/img/logo.png" alt="Authentech">
+  <div class="splash-word"><span class="grad-text">Authentech</span></div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+<script>
+  (function(){
+    var params = new URLSearchParams(location.search);
+    if (params.get("nav") === "1") {
+      document.body.classList.add("splash-done");
+    }
+    var theme = params.get("theme");
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.setAttribute("data-bs-theme", theme);
+    }
+    if (params.has("nav") || params.has("theme")) {
+      history.replaceState(null, "", location.pathname);
+    }
+  })();
+</script>
+
+<!-- Dev-mode password gate — shown until AT.checkDevAuth() confirms this
+     browser is signed in. Nothing behind it renders until then. -->
+<div id="dev-gate" style="position:fixed; inset:0; z-index:9999; background:var(--bg); display:flex; align-items:center; justify-content:center; padding:20px;">
+  <div style="width:100%; max-width:360px;">
+    <div style="text-align:center; margin-bottom:18px;">
+      <img src="assets/img/logo.png" alt="Authentech" style="width:40px; height:40px; border-radius:10px; margin-bottom:10px;">
+      <h5 style="margin:0;">Dev mode</h5>
+      <p style="font-size:12.5px; color:var(--text-mute); margin-top:4px;">Team-only workspace. Enter the dev password to continue.</p>
+    </div>
+    <input type="password" id="dev-gate-password" class="contact-input mb-2" placeholder="Dev password" style="width:100%;">
+    <div id="dev-gate-error" style="font-size:12px; color:#ef4444; margin-bottom:10px; display:none;"></div>
+    <button class="btn-grad w-100" onclick="submitDevGate()">Sign in</button>
+    <div class="text-center mt-3">
+      <a href="index.html" style="font-size:12px; color:var(--text-mute);">&larr; Back to the public site</a>
+    </div>
+  </div>
+</div>
+
+<div id="dev-content" style="display:none;">
+
+<div class="sidebar" id="sidebar-root"></div>
+<div class="mobile-bottombar" id="mobile-bottombar-root"></div>
+
+<div class="main">
+  <div class="mobile-topbar" id="mobile-topbar-root"></div>
+
+  <div class="blob" style="width:300px; height:300px; background:#7c5cff; top:-60px; right:120px;"></div>
+  <div class="blob" style="width:220px; height:220px; background:#c05fe0; top:340px; left:45%;"></div>
+
+  <div class="topline" id="topline-root"></div>
+
+
+  <div class="page-hero">
+    <span class="dev-badge"><i class="bi bi-code-square"></i> Team workspace</span>
+    <h1 class="mt-2">Dev mode</h1>
+    <p>Upload screen recordings, publish elaborate project details, and manage the team roster &mdash; all in one place.</p>
+    <button class="btn-ghost mt-2" style="padding:6px 14px; font-size:12px;" onclick="devLogout()"><i class="bi bi-box-arrow-right"></i> Sign out of dev mode</button>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-6 col-md-3"><div class="stat-card"><div class="num grad-text" id="stat-projects">&mdash;</div><div class="lbl">Projects live</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-card"><div class="num grad-text" id="stat-devs">5</div><div class="lbl">Team members</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-card"><div class="num grad-text">3</div><div class="lbl">New messages</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-card"><div class="num grad-text">2</div><div class="lbl">Pending quotes</div></div></div>
+  </div>
+
+  <!-- Storage meter -->
+  <div class="card mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <div class="section-title" style="margin-bottom:0;"><i class="bi bi-hdd"></i> Screen recording storage</div>
+      <div id="storage-text" style="font-size:12px; color:var(--text-mute);">Loading&hellip;</div>
+    </div>
+    <div style="height:8px; border-radius:20px; background:var(--surface-3); overflow:hidden;">
+      <div id="storage-bar" style="height:100%; width:0%; background:var(--grad); transition:width .4s ease;"></div>
+    </div>
+    <div style="font-size:11px; color:var(--text-mute); margin-top:6px;">500MB total, shared across every uploaded recording. Videos over 150MB each aren't accepted individually.</div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-5">
+      <div class="card h-100">
+        <div class="section-title" id="upload-form-title">Upload a project</div>
+        <div class="section-sub">Add it to the public Work page, with a real screen recording</div>
+
+        <div class="upload-drop mb-2" id="video-drop" onclick="document.getElementById('proj-video').click()">
+          <i class="bi bi-camera-reels"></i>
+          <span id="video-drop-label">Click to upload a screen recording (.mp4, .webm, .mov &mdash; up to 150MB)</span>
+          <input type="file" id="proj-video" accept="video/mp4,video/webm,video/quicktime" style="display:none" onchange="onVideoChosen()">
+        </div>
+        <div id="upload-progress-wrap" style="display:none; margin-bottom:10px;">
+          <div style="height:6px; border-radius:20px; background:var(--surface-3); overflow:hidden;">
+            <div id="upload-progress-bar" style="height:100%; width:0%; background:var(--grad); transition:width .2s ease;"></div>
+          </div>
+          <div id="upload-progress-text" style="font-size:11px; color:var(--text-mute); margin-top:4px;">Uploading&hellip;</div>
+        </div>
+
+        <div class="d-flex flex-column gap-2">
+          <input class="contact-input" id="proj-name" placeholder="Project name">
+          <input class="contact-input" id="proj-tagline" placeholder="Short tagline (shows on the preview card)">
+          <textarea class="contact-input" id="proj-desc" placeholder="Full description &mdash; shown when someone clicks Details" rows="3" style="resize:vertical;"></textarea>
+          <div class="tag-input-row" id="tag-row">
+            <input id="tag-input" placeholder="Type a tech and press Enter (e.g. PHP)">
+          </div>
+          <div class="row g-2">
+            <div class="col-6"><input class="contact-input" id="proj-live" placeholder="Live project link"></div>
+            <div class="col-6"><input class="contact-input" id="proj-repo" placeholder="Repo link"></div>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn-grad flex-grow-1" id="publish-btn" onclick="publishProject()">Publish project</button>
+            <button class="btn-ghost" id="cancel-edit-btn" style="display:none;" onclick="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="card h-100">
+        <div class="d-flex justify-content-between align-items-start mb-1">
+          <div>
+            <div class="section-title">Team projects</div>
+            <div class="section-sub" style="margin-bottom:0;">Live on the public Work page &mdash; click Edit to attach or replace a recording</div>
+          </div>
+        </div>
+        <div class="row g-2" id="project-grid"><div class="col-12" style="font-size:12.5px; color:var(--text-mute);">Loading projects&hellip;</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="section-title">Team roster</div>
+        <div class="section-sub">Add or remove developers shown on the Team page</div>
+        <div id="roster-list" class="mb-3"></div>
+        <div class="row g-2">
+          <div class="col-6"><input class="contact-input" id="member-name" placeholder="Name"></div>
+          <div class="col-6"><input class="contact-input" id="member-role" placeholder="Role"></div>
+          <div class="col-8"><input class="contact-input" id="member-skills" placeholder="Skills, comma separated"></div>
+          <div class="col-4"><button class="btn-ghost w-100" onclick="addMember()">Add</button></div>
+        </div>
+        <div style="font-size:11px; color:var(--text-mute); margin-top:8px;">
+          <i class="bi bi-info-circle"></i> Team photos aren't uploaded here &mdash; drop image files named <code>team-1.jpg</code> through <code>team-5.jpg</code> straight into <code>assets/img/team/</code> and they'll show up automatically on the Team page and homepage.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="section-title">Client inbox</div>
+        <div class="section-sub">Messages from Get a Quote and Contact</div>
+        <div class="inbox-row">
+          <div class="avatar"><i class="bi bi-person-fill"></i></div>
+          <div>
+            <div style="font-size:13px; font-weight:600;">New quote request</div>
+            <div class="msg">"Need a booking system for a small hotel, 12 rooms, would like it live before December."</div>
+            <div class="meta">via Get a Quote</div>
+          </div>
+        </div>
+        <div class="inbox-row">
+          <div class="avatar"><i class="bi bi-person-fill"></i></div>
+          <div>
+            <div style="font-size:13px; font-weight:600;">New message</div>
+            <div class="msg">"Do you handle ongoing maintenance after launch, or just the initial build?"</div>
+            <div class="meta">via Contact</div>
+          </div>
+        </div>
+        <div class="inbox-row">
+          <div class="avatar"><i class="bi bi-person-fill"></i></div>
+          <div>
+            <div style="font-size:13px; font-weight:600;">New quote request</div>
+            <div class="msg">"Looking for a catalogue + shop for a fashion line, similar to M_Couture."</div>
+            <div class="meta">via Get a Quote</div>
+          </div>
+        </div>
+        <div style="font-size:11px; color:var(--text-mute); margin-top:8px;">
+          <i class="bi bi-info-circle"></i> Connect a backend to receive real submissions here.
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Authentech &mdash; 5 developers, one vision.</span>
+    <span>Built with HTML, CSS, JS &amp; Bootstrap</span>
+  </footer>
+</div>
+
+</div><!-- /#dev-content -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  // ---- Dev-mode auth gate ----
+  async function initDevGate(){
+    const authed = await AT.checkDevAuth();
+    if (authed){
+      document.getElementById("dev-gate").style.display = "none";
+      document.getElementById("dev-content").style.display = "";
+      initDashboardChrome();
+      loadEverything();
+    } else {
+      document.getElementById("dev-gate").style.display = "flex";
+      document.getElementById("dev-content").style.display = "none";
+    }
+  }
+  async function submitDevGate(){
+    const pwInput = document.getElementById("dev-gate-password");
+    const errEl = document.getElementById("dev-gate-error");
+    const pw = pwInput.value;
+    errEl.style.display = "none";
+    const res = await AT.devLogin(pw);
+    if (res.ok && res.authed){
+      initDevGate();
+    } else {
+      errEl.textContent = res.error || "Couldn't sign in — try again.";
+      errEl.style.display = "block";
+      pwInput.value = "";
+      pwInput.focus();
+    }
+  }
+  document.getElementById("dev-gate-password").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") submitDevGate();
+  });
+  async function devLogout(){
+    await AT.devLogout();
+    window.location.href = "index.html";
+  }
+
+  function initDashboardChrome(){
+    renderSidebar("dashboard");
+    renderTopline("Team workspace — members only", "View public site", "index.html");
+    renderMobileTopbar();
+    renderMobileBottomBar("dashboard");
+  }
+
+  initDevGate();
+</script>
+
+<script>
+  // ---- Project management (backed by api/projects.php) ----
+  let projects = [];
+  let editingId = null;
+  let tags = [];
+  let chosenVideoFile = null;
+
+  async function loadEverything(){
+    await Promise.all([loadProjects(), loadStorage()]);
+    renderRoster();
+  }
+
+  async function loadProjects(){
+    const result = await AT.fetchProjects();
+    projects = result || [];
+    document.getElementById("stat-projects").textContent = projects.length;
+    renderProjects();
+  }
+
+  async function loadStorage(){
+    const info = await AT.fetchStorage();
+    if (!info) return;
+    const pct = Math.min(100, Math.round((info.usedBytes / info.limitBytes) * 100));
+    document.getElementById("storage-bar").style.width = pct + "%";
+    document.getElementById("storage-text").textContent =
+      `${AT.formatBytes(info.usedBytes)} / ${AT.formatBytes(info.limitBytes)} used`;
+    if (pct > 90) document.getElementById("storage-bar").style.background = "#ef4444";
+  }
+
+  function renderProjects(){
+    const grid = document.getElementById("project-grid");
+    if (projects.length === 0){ grid.innerHTML = '<div class="col-12"><div class="empty-state">No projects yet &mdash; publish your first one.</div></div>'; return; }
+    grid.innerHTML = projects.map((p) => `
+      <div class="col-md-6">
+        <div class="proj-card dev-project-card">
+          <div class="dp-actions">
+            <div class="dp-icon-btn" onclick="editProject('${p.id}')" title="Edit"><i class="bi bi-pencil"></i></div>
+            <div class="dp-icon-btn" onclick="removeProject('${p.id}')" title="Remove"><i class="bi bi-trash"></i></div>
+          </div>
+          ${p.video
+            ? `<video class="video-embed" src="${p.video}" controls preload="metadata"></video>`
+            : `<div class="video-placeholder"><div class="vp-play"><i class="bi bi-play-fill"></i></div><span class="vp-label"><i class="bi bi-record-circle"></i> No recording yet</span></div>`}
+          <div style="font-size:12.5px; font-weight:600;">${AT.escapeHtml(p.name)}</div>
+          <div style="font-size:11px; color:var(--text-mute); margin-bottom:6px;">${AT.escapeHtml(p.tagline || p.description || "No description yet.")}</div>
+          <div class="d-flex gap-1 flex-wrap">${(p.tags||[]).map(t => `<span class="badge-stack">${AT.escapeHtml(t)}</span>`).join("")}</div>
+          ${p.video ? `<div style="font-size:10px; color:var(--text-mute); margin-top:6px;">${AT.formatBytes(p.videoBytes)} &middot; <a href="#" onclick="removeVideoOnly('${p.id}'); return false;" style="color:var(--text-mute);">remove recording only</a></div>` : ""}
+        </div>
+      </div>`).join("");
+  }
+
+  function onVideoChosen(){
+    const input = document.getElementById("proj-video");
+    chosenVideoFile = input.files[0] || null;
+    const label = document.getElementById("video-drop-label");
+    if (chosenVideoFile){
+      label.textContent = `${chosenVideoFile.name} (${AT.formatBytes(chosenVideoFile.size)}) — click to change`;
+    } else {
+      label.textContent = "Click to upload a screen recording (.mp4, .webm, .mov — up to 150MB)";
+    }
+  }
+
+  async function publishProject(){
+    const name = document.getElementById("proj-name").value.trim();
+    if (!name){ document.getElementById("proj-name").focus(); return; }
+
+    const fd = new FormData();
+    fd.append("name", name);
+    fd.append("tagline", document.getElementById("proj-tagline").value.trim());
+    fd.append("description", document.getElementById("proj-desc").value.trim());
+    fd.append("live", document.getElementById("proj-live").value.trim());
+    fd.append("repo", document.getElementById("proj-repo").value.trim());
+    fd.append("tags", tags.join(","));
+    if (chosenVideoFile) fd.append("video", chosenVideoFile);
+    if (editingId) fd.append("id", editingId);
+
+    const btn = document.getElementById("publish-btn");
+    btn.disabled = true;
+    btn.textContent = editingId ? "Saving…" : "Publishing…";
+
+    if (chosenVideoFile){
+      document.getElementById("upload-progress-wrap").style.display = "";
+    }
+
+    const result = await AT.submitProject(editingId ? "update" : "create", fd, (pct) => {
+      document.getElementById("upload-progress-bar").style.width = pct + "%";
+      document.getElementById("upload-progress-text").textContent = `Uploading… ${pct}%`;
+    });
+
+    btn.disabled = false;
+    btn.textContent = editingId ? "Save changes" : "Publish project";
+    document.getElementById("upload-progress-wrap").style.display = "none";
+
+    if (!result.ok){
+      alert(result.error || "Something went wrong — please try again.");
+      return;
+    }
+
+    resetForm();
+    await loadProjects();
+    await loadStorage();
+  }
+
+  function editProject(id){
+    const p = projects.find(x => x.id === id);
+    if (!p) return;
+    editingId = id;
+    document.getElementById("upload-form-title").innerHTML = `Editing "${AT.escapeHtml(p.name)}"`;
+    document.getElementById("proj-name").value = p.name || "";
+    document.getElementById("proj-tagline").value = p.tagline || "";
+    document.getElementById("proj-desc").value = p.description || "";
+    document.getElementById("proj-live").value = p.live || "";
+    document.getElementById("proj-repo").value = p.repo || "";
+    tags = [...(p.tags || [])];
+    renderTags();
+    document.getElementById("video-drop-label").textContent = p.video
+      ? "This project already has a recording — choose a file to replace it"
+      : "Click to upload a screen recording (.mp4, .webm, .mov — up to 150MB)";
+    chosenVideoFile = null;
+    document.getElementById("proj-video").value = "";
+    document.getElementById("publish-btn").textContent = "Save changes";
+    document.getElementById("cancel-edit-btn").style.display = "";
+    window.scrollTo({ top: document.getElementById("proj-name").closest(".card").offsetTop - 80, behavior: "smooth" });
+  }
+
+  function cancelEdit(){ resetForm(); }
+
+  function resetForm(){
+    editingId = null;
+    tags = [];
+    chosenVideoFile = null;
+    document.getElementById("upload-form-title").textContent = "Upload a project";
+    document.getElementById("proj-name").value = "";
+    document.getElementById("proj-tagline").value = "";
+    document.getElementById("proj-desc").value = "";
+    document.getElementById("proj-live").value = "";
+    document.getElementById("proj-repo").value = "";
+    document.getElementById("proj-video").value = "";
+    document.getElementById("video-drop-label").textContent = "Click to upload a screen recording (.mp4, .webm, .mov — up to 150MB)";
+    document.getElementById("publish-btn").textContent = "Publish project";
+    document.getElementById("cancel-edit-btn").style.display = "none";
+    renderTags();
+  }
+
+  async function removeProject(id){
+    if (!confirm("Remove this project and its recording? This can't be undone.")) return;
+    const ok = await AT.deleteProject(id);
+    if (ok){ await loadProjects(); await loadStorage(); }
+    else alert("Couldn't remove that project — please try again.");
+  }
+
+  async function removeVideoOnly(id){
+    if (!confirm("Remove just the screen recording? The project details stay.")) return;
+    const ok = await AT.deleteVideo(id);
+    if (ok){ await loadProjects(); await loadStorage(); }
+    else alert("Couldn't remove that recording — please try again.");
+  }
+
+  function renderTags(){
+    const row = document.getElementById("tag-row");
+    const input = document.getElementById("tag-input");
+    row.querySelectorAll(".tag-chip").forEach(c => c.remove());
+    tags.forEach((t, i) => {
+      const chip = document.createElement("span");
+      chip.className = "tag-chip";
+      chip.innerHTML = `${t} <i class="bi bi-x" onclick="removeTag(${i})"></i>`;
+      row.insertBefore(chip, input);
+    });
+  }
+  function removeTag(i){ tags.splice(i,1); renderTags(); }
+  document.getElementById("tag-input").addEventListener("keydown", function(e){
+    if (e.key === "Enter" && this.value.trim()){
+      e.preventDefault();
+      tags.push(this.value.trim());
+      this.value = "";
+      renderTags();
+    }
+  });
+
+  // ---- Team roster (client-side only — not persisted; photos are file-based, see note above) ----
+  const SEED_MEMBERS = [
+    {name:"Justin", role:"Full-stack Developer", skills:["PHP","MySQL","JS","Bootstrap"]},
+    {name:"Developer", role:"Frontend Developer", skills:["React","Node"]},
+    {name:"Developer", role:"Backend Developer", skills:["Laravel","MySQL"]},
+    {name:"Developer", role:"UI/UX Designer", skills:["Figma","CSS"]},
+    {name:"Developer", role:"Full-stack Developer", skills:["Node","PostgreSQL"]},
+  ];
+  let members = [...SEED_MEMBERS];
+
+  function renderRoster(){
+    const list = document.getElementById("roster-list");
+    document.getElementById("stat-devs").textContent = members.length;
+    list.innerHTML = members.map((m, i) => `
+      <div class="dev-row">
+        <div class="avatar"><i class="bi bi-person-fill"></i></div>
+        <div class="flex-grow-1">
+          <div style="font-size:13px; font-weight:600;">${AT.escapeHtml(m.name)}</div>
+          <div class="d-flex gap-1 mt-1 flex-wrap">${m.skills.map(s => `<span class="badge-stack">${AT.escapeHtml(s)}</span>`).join("")}</div>
+        </div>
+        <div class="dp-icon-btn" style="position:static; background:var(--surface-3); color:var(--text-dim);" onclick="removeMember(${i})" title="Remove"><i class="bi bi-x"></i></div>
+      </div>`).join("");
+  }
+  function addMember(){
+    const name = document.getElementById("member-name").value.trim();
+    const role = document.getElementById("member-role").value.trim();
+    const skillsRaw = document.getElementById("member-skills").value.trim();
+    if (!name){ document.getElementById("member-name").focus(); return; }
+    const skills = skillsRaw ? skillsRaw.split(",").map(s => s.trim()).filter(Boolean) : ["New"];
+    members.push({name, role: role || "Developer", skills});
+    document.getElementById("member-name").value = "";
+    document.getElementById("member-role").value = "";
+    document.getElementById("member-skills").value = "";
+    renderRoster();
+  }
+  function removeMember(i){ members.splice(i,1); renderRoster(); }
+</script>
+</body>
+</html>

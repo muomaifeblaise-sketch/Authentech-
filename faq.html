@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Authentech</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="site-splash">
+  <img src="assets/img/logo.png" alt="Authentech">
+  <div class="splash-word"><span class="grad-text">Authentech</span></div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+<script>
+  (function(){
+    var params = new URLSearchParams(location.search);
+    if (params.get("nav") === "1") {
+      document.body.classList.add("splash-done");
+    }
+    var theme = params.get("theme");
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.setAttribute("data-bs-theme", theme);
+    }
+    if (params.has("nav") || params.has("theme")) {
+      history.replaceState(null, "", location.pathname);
+    }
+  })();
+</script>
+
+<div class="sidebar" id="sidebar-root"></div>
+<div class="mobile-bottombar" id="mobile-bottombar-root"></div>
+
+<div class="main">
+  <div class="mobile-topbar" id="mobile-topbar-root"></div>
+
+  <div class="blob" style="width:300px; height:300px; background:#7c5cff; top:-60px; right:120px;"></div>
+  <div class="blob" style="width:220px; height:220px; background:#c05fe0; top:340px; left:45%;"></div>
+
+  <div class="topline" id="topline-root"></div>
+
+
+  <div class="page-hero">
+    <div class="eyebrow">FAQ &amp; updates</div>
+    <h1>Frequently asked, and what we're up to.</h1>
+    <p>Answers to the questions we hear most, plus updates from the team.</p>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="section-title">Frequently asked</div>
+        <div class="faq-item">
+          <div class="faq-q">How long does a project take? <i class="bi bi-chevron-down"></i></div>
+          <div class="faq-a">Most digital homes take 3&ndash;5 weeks depending on the features you need.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you host it for us? <i class="bi bi-chevron-down"></i></div>
+          <div class="faq-a">Yes &mdash; hosting and upkeep are part of every build we deliver.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What if I'm not technical? <i class="bi bi-chevron-down"></i></div>
+          <div class="faq-a">That's most of our clients. We handle everything end to end and explain things in plain terms.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I request changes after launch? <i class="bi bi-chevron-down"></i></div>
+          <div class="faq-a">Yes &mdash; we stay reachable for updates and fixes after your site goes live.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How do I get started? <i class="bi bi-chevron-down"></i></div>
+          <div class="faq-a">Send us a quick brief on the Get a Quote page, or reach out directly through Contact.</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="photo-card h-100" style="background-image:url('assets/img/blog/digital-growth.jpg'); min-height:280px;"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">From the team</div>
+    <div class="section-sub">Updates, tips, and behind-the-scenes</div>
+    <div class="row g-2">
+      <div class="col-md-4 col-6"><div class="blog-card"><div class="blog-thumb" style="background-image:url('assets/img/blog/digital-growth.jpg');"></div><div style="font-size:12px; font-weight:600;">What's a digital home?</div></div></div>
+      <div class="col-md-4 col-6"><div class="blog-card"><div class="blog-thumb" style="background-image:url('assets/img/blog/ai-hands.jpg');"></div><div style="font-size:12px; font-weight:600;">Behind the SkinDoctor build</div></div></div>
+      <div class="col-md-4 col-6"><div class="blog-card"><div class="blog-thumb" style="background-image:url('assets/img/blog/team-huddle.jpg');"></div><div style="font-size:12px; font-weight:600;">Meet the team</div></div></div>
+      <div class="col-md-4 col-6"><div class="blog-card"><div class="blog-thumb" style="background-image:url('assets/img/blog/handshake-globe.jpg');"></div><div style="font-size:12px; font-weight:600;">Why we host every project</div></div></div>
+      <div class="col-md-4 col-6"><div class="blog-card"><div class="blog-thumb" style="background-image:url('assets/img/blog/team-highfive.jpg');"></div><div style="font-size:12px; font-weight:600;">Celebrating our launches</div></div></div>
+    </div>
+  </div>
+
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Authentech &mdash; 5 developers, one vision.</span>
+    <span>Built with HTML, CSS, JS &amp; Bootstrap</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderSidebar("faq");
+  renderTopline("3 of 5 devs available now", "Get a free quote", "quote.html");
+  renderMobileTopbar();
+  renderMobileBottomBar("faq");
+</script>
+<script>
+  document.querySelectorAll(".faq-item").forEach(item => {
+    item.querySelector(".faq-q").addEventListener("click", () => item.classList.toggle("open"));
+  });
+</script>
+</body>
+</html>
