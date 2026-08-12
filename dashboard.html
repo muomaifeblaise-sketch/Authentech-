@@ -227,7 +227,14 @@
     errEl.style.display = "none";
     const res = await AT.devLogin(pw);
     if (res.ok && res.authed){
-      initDevGate();
+      // Trust this response directly instead of re-checking with the
+      // server — some free hosts have a brief lag before a freshly
+      // created session is visible to the very next request, which was
+      // causing a successful login to silently bounce back to this gate.
+      document.getElementById("dev-gate").style.display = "none";
+      document.getElementById("dev-content").style.display = "";
+      initDashboardChrome();
+      loadEverything();
     } else {
       errEl.textContent = res.error || "Couldn't sign in — try again.";
       errEl.style.display = "block";
