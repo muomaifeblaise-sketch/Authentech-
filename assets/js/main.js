@@ -12,10 +12,21 @@
 // comments at the top of that file (BACKEND_URL + CORS_ALLOWED_ORIGINS).
 const API_BASE = "https://theauthentech.duckdns.org";
 
+// Dev-mode login no longer uses cookies — cross-site cookies between two
+// different domains (Vercel + this backend) turned out to be unreliable
+// across browsers. Instead, login returns a token that's stored here in
+// localStorage (first-party, no cross-site restrictions) and sent back
+// as a custom header on every authenticated request.
+const AT_TOKEN_KEY = "at_dev_token";
+
 const AT = {
   async checkDevAuth() {
+    const token = localStorage.getItem(AT_TOKEN_KEY);
+    if (!token) return false;
     try {
-      const res = await fetch(`${API_BASE}/api/auth.php?action=check`, { credentials: "include" });
+      const res = await fetch(`${API_BASE}/api/auth.php?action=check`, {
+        headers: { "X-Dev-Token": token },
+      });
       if (!res.ok) return false;
       const data = await res.json();
       return !!data.authed;
@@ -25,22 +36,29 @@ const AT = {
     try {
       const res = await fetch(`${API_BASE}/api/auth.php?action=login`, {
         method: "POST",
-        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
       });
       const data = await res.json();
+      if (res.ok && data.authed && data.token) {
+        localStorage.setItem(AT_TOKEN_KEY, data.token);
+      }
       return { ok: res.ok, ...data };
     } catch (e) { return { ok: false, error: "Couldn't reach the server." }; }
   },
   async devLogout() {
+    const token = localStorage.getItem(AT_TOKEN_KEY);
+    localStorage.removeItem(AT_TOKEN_KEY);
     try {
-      await fetch(`${API_BASE}/api/auth.php?action=logout`, { method: "POST", credentials: "include" });
+      await fetch(`${API_BASE}/api/auth.php?action=logout`, {
+        method: "POST",
+        headers: token ? { "X-Dev-Token": token } : {},
+      });
     } catch (e) {}
   },
   async fetchProjects() {
     try {
-      const res = await fetch(`${API_BASE}/api/projects.php?action=list`, { credentials: "include" });
+      const res = await fetch(`${API_BASE}/api/projects.php?action=list`);
       if (!res.ok) return null;
       const data = await res.json();
       return data.projects || [];
@@ -48,7 +66,7 @@ const AT = {
   },
   async fetchStorage() {
     try {
-      const res = await fetch(`${API_BASE}/api/projects.php?action=storage`, { credentials: "include" });
+      const res = await fetch(`${API_BASE}/api/projects.php?action=storage`);
       if (!res.ok) return null;
       return await res.json();
     } catch (e) { return null; }
@@ -56,9 +74,10 @@ const AT = {
   // Uses XHR (not fetch) so we get real upload progress events.
   submitProject(action, formData, onProgress) {
     return new Promise((resolve) => {
+      const token = localStorage.getItem(AT_TOKEN_KEY);
       const xhr = new XMLHttpRequest();
       xhr.open("POST", `${API_BASE}/api/projects.php?action=${action}`);
-      xhr.withCredentials = true;
+      if (token) xhr.setRequestHeader("X-Dev-Token", token);
       xhr.upload.addEventListener("progress", (e) => {
         if (e.lengthComputable && onProgress) onProgress(Math.round((e.loaded / e.total) * 100));
       });
@@ -73,17 +92,27 @@ const AT = {
   },
   async deleteProject(id) {
     try {
+      const token = localStorage.getItem(AT_TOKEN_KEY);
       const fd = new FormData();
       fd.append("id", id);
-      const res = await fetch(`${API_BASE}/api/projects.php?action=delete`, { method: "POST", credentials: "include", body: fd });
+      const res = await fetch(`${API_BASE}/api/projects.php?action=delete`, {
+        method: "POST",
+        headers: token ? { "X-Dev-Token": token } : {},
+        body: fd,
+      });
       return res.ok;
     } catch (e) { return false; }
   },
   async deleteVideo(id) {
     try {
+      const token = localStorage.getItem(AT_TOKEN_KEY);
       const fd = new FormData();
       fd.append("id", id);
-      const res = await fetch(`${API_BASE}/api/projects.php?action=delete_video`, { method: "POST", credentials: "include", body: fd });
+      const res = await fetch(`${API_BASE}/api/projects.php?action=delete_video`, {
+        method: "POST",
+        headers: token ? { "X-Dev-Token": token } : {},
+        body: fd,
+      });
       return res.ok;
     } catch (e) { return false; }
   },
@@ -184,8 +213,6 @@ const AT = {
     if (modal) {
       modal.show();
     } else {
-      // Bootstrap's JS hasn't finished loading yet (slow connection / CDN
-      // hiccup) — fall back to a plain show/hide so Details still works.
       modalEl.classList.add("show");
       modalEl.style.display = "block";
       modalEl.style.background = "rgba(0,0,0,.6)";
@@ -256,15 +283,8 @@ function renderSidebar(activeKey) {
   const el = document.getElementById("sidebar-root");
   if (el) el.innerHTML = html;
 
-  // The Dev mode toggle is hidden from everyone by default — it only
-  // appears once we've confirmed (server-side) that this browser is
-  // signed in to dev mode. Regular visitors never see it in the nav;
-  // developers reach it by going straight to dashboard.html, which
-  // prompts for the dev password.
   const isDashboard = window.location.pathname.endsWith("dashboard.html");
   if (isDashboard) {
-    // Always show the toggle on the dashboard itself once auth is confirmed
-    // (dashboard.html's own auth gate handles the password prompt).
     AT.checkDevAuth().then(authed => {
       if (authed) {
         const toggle = document.getElementById("mode-toggle-root");
@@ -396,7 +416,7 @@ function initPageTransitions(){
 initPageTransitions();
 
 function initSplash(){
-  if (document.body.classList.contains("splash-done")) return; // already skipped by the inline early-check
+  if (document.body.classList.contains("splash-done")) return;
   setTimeout(() => { document.body.classList.add("splash-done"); }, 5000);
 }
 initSplash();
