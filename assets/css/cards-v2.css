@@ -1,0 +1,112 @@
+/* ══════════════════════════════════════════
+   WORK CARDS v2 — bigger thumbnails, click-to-expand lightbox
+══════════════════════════════════════════ */
+
+.wc-grid{ --wc-hue: 260; }
+
+.work-card-v2{
+  background:var(--surface); border:1px solid var(--border); border-radius:16px;
+  overflow:hidden; height:100%; display:flex; flex-direction:column;
+  transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.work-card-v2:hover{
+  transform:translateY(-3px);
+  border-color:var(--border-strong);
+  box-shadow:0 16px 40px rgba(0,0,0,.35);
+}
+
+.wc-thumb{
+  position:relative; width:100%; aspect-ratio:16/10; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden; flex-shrink:0;
+}
+.wc-thumb::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%);
+  pointer-events:none;
+}
+.wc-play{
+  width:72px; height:72px; border-radius:50%;
+  background:rgba(255,255,255,.16); backdrop-filter:blur(6px);
+  border:2px solid rgba(255,255,255,.4);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:28px; z-index:2;
+  transition:transform .2s ease, background .2s ease;
+}
+.work-card-v2:hover .wc-play{
+  transform:scale(1.1); background:rgba(255,255,255,.28);
+}
+.wc-thumb-badge{
+  position:absolute; left:16px; bottom:14px; z-index:2;
+  font-size:12px; font-weight:600; letter-spacing:.3px; text-transform:uppercase;
+  color:rgba(255,255,255,.9); display:flex; align-items:center; gap:6px;
+}
+.wc-thumb-badge i{ font-size:10px; }
+.wc-thumb-badge.has-video i{ color:#5be08a; }
+.wc-duration{
+  position:absolute; right:14px; bottom:14px; z-index:2;
+  font-size:11px; font-weight:600; background:rgba(0,0,0,.55);
+  color:#fff; padding:3px 9px; border-radius:6px;
+}
+
+.wc-body{
+  padding:20px 22px 22px; display:flex; flex-direction:column; flex:1;
+}
+.wc-body h6{ font-size:18px; font-weight:700; margin:0 0 6px; }
+.wc-body p{
+  font-size:13.5px; color:var(--text-dim); margin:0 0 14px; line-height:1.55;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.wc-tags{ display:flex; flex-wrap:wrap; gap:7px; margin-top:auto; margin-bottom:14px; }
+.wc-actions{ display:flex; gap:9px; flex-wrap:wrap; }
+
+/* Compact 3-up homepage preview variant — same idea, smaller footprint */
+.work-card-v2.compact .wc-thumb{ aspect-ratio:16/9; }
+.work-card-v2.compact .wc-play{ width:44px; height:44px; font-size:18px; }
+.work-card-v2.compact .wc-body{ padding:12px 14px 14px; }
+.work-card-v2.compact .wc-body h6{ font-size:13px; }
+.work-card-v2.compact .wc-body p{ font-size:11.5px; -webkit-line-clamp:1; margin-bottom:8px; }
+
+/* ══════════════════════════════════════════
+   THEATER LIGHTBOX — the "own screen" for playing a recording
+══════════════════════════════════════════ */
+.at-lightbox-backdrop{
+  position:fixed; inset:0; z-index:2000;
+  background:rgba(4,4,8,.86); backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center; padding:24px;
+  opacity:0; pointer-events:none; transition:opacity .2s ease;
+}
+.at-lightbox-backdrop.open{ opacity:1; pointer-events:auto; }
+
+.at-lightbox-panel{
+  width:100%; max-width:920px; max-height:90vh; overflow-y:auto;
+  background:var(--surface); border:1px solid var(--border-strong);
+  border-radius:20px; box-shadow:0 30px 80px rgba(0,0,0,.5);
+  transform:translateY(16px) scale(.98); transition:transform .25s ease;
+}
+.at-lightbox-backdrop.open .at-lightbox-panel{ transform:translateY(0) scale(1); }
+
+.at-lightbox-close{
+  position:absolute; top:16px; right:16px; z-index:3;
+  width:36px; height:36px; border-radius:50%;
+  background:rgba(0,0,0,.5); border:1px solid rgba(255,255,255,.15);
+  color:#fff; font-size:18px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+}
+
+.at-lightbox-video-wrap{
+  position:relative; width:100%; aspect-ratio:16/9; background:#000;
+  border-radius:20px 20px 0 0; overflow:hidden; flex-shrink:0;
+}
+.at-lightbox-video-wrap video{ width:100%; height:100%; object-fit:contain; background:#000; }
+.at-lightbox-empty{
+  width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:10px; color:var(--text-mute);
+}
+.at-lightbox-empty i{ font-size:34px; opacity:.5; }
+
+.at-lightbox-info{ padding:24px 28px 28px; }
+.at-lightbox-info h3{ font-size:22px; font-weight:800; margin:0 0 8px; }
+.at-lightbox-info p{ font-size:14px; color:var(--text-dim); line-height:1.65; margin:0 0 16px; }
+.at-lightbox-tags{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:18px; }
+.at-lightbox-actions{ display:flex; gap:10px; flex-wrap:wrap; }

@@ -145,18 +145,37 @@
   <div class="row g-3 mb-3">
     <div class="col-lg-6">
       <div class="card h-100">
-        <div class="section-title">Team roster</div>
-        <div class="section-sub">Add or remove developers shown on the Team page</div>
-        <div id="roster-list" class="mb-3"></div>
-        <div class="row g-2">
+        <div class="section-title" id="member-form-title">Team roster</div>
+        <div class="section-sub">Add, edit, or remove developers shown on the Team page &mdash; photos upload right here</div>
+
+        <div class="upload-drop mb-2" id="photo-drop" onclick="document.getElementById('member-photo').click()" style="padding:16px;">
+          <i class="bi bi-person-circle"></i>
+          <span id="photo-drop-label">Click to upload a profile photo (.jpg, .png, .webp &mdash; up to 5MB)</span>
+          <input type="file" id="member-photo" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="onPhotoChosen()">
+        </div>
+        <div id="photo-progress-wrap" style="display:none; margin-bottom:10px;">
+          <div style="height:6px; border-radius:20px; background:var(--surface-3); overflow:hidden;">
+            <div id="photo-progress-bar" style="height:100%; width:0%; background:var(--grad); transition:width .2s ease;"></div>
+          </div>
+        </div>
+
+        <div class="row g-2 mb-2">
           <div class="col-6"><input class="contact-input" id="member-name" placeholder="Name"></div>
           <div class="col-6"><input class="contact-input" id="member-role" placeholder="Role"></div>
           <div class="col-8"><input class="contact-input" id="member-skills" placeholder="Skills, comma separated"></div>
-          <div class="col-4"><button class="btn-ghost w-100" onclick="addMember()">Add</button></div>
+          <div class="col-4">
+            <select class="contact-input" id="member-status" style="width:100%;">
+              <option value="avail">Available</option>
+              <option value="busy">In progress</option>
+            </select>
+          </div>
         </div>
-        <div style="font-size:11px; color:var(--text-mute); margin-top:8px;">
-          <i class="bi bi-info-circle"></i> Team photos aren't uploaded here &mdash; drop image files named <code>team-1.jpg</code> through <code>team-5.jpg</code> straight into <code>assets/img/team/</code> and they'll show up automatically on the Team page and homepage.
+        <div class="d-flex gap-2 mb-3">
+          <button class="btn-grad flex-grow-1" id="member-save-btn" onclick="saveMember()">Add to roster</button>
+          <button class="btn-ghost" id="member-cancel-btn" style="display:none;" onclick="cancelMemberEdit()">Cancel</button>
         </div>
+
+        <div id="roster-list"></div>
       </div>
     </div>
 
@@ -268,8 +287,7 @@
   let chosenVideoFile = null;
 
   async function loadEverything(){
-    await Promise.all([loadProjects(), loadStorage()]);
-    renderRoster();
+    await Promise.all([loadProjects(), loadStorage(), loadTeam()]);
   }
 
   async function loadProjects(){
@@ -438,42 +456,120 @@
     }
   });
 
-  // ---- Team roster (client-side only — not persisted; photos are file-based, see note above) ----
-  const SEED_MEMBERS = [
-    {name:"Justin", role:"Full-stack Developer", skills:["PHP","MySQL","JS","Bootstrap"]},
-    {name:"Developer", role:"Frontend Developer", skills:["React","Node"]},
-    {name:"Developer", role:"Backend Developer", skills:["Laravel","MySQL"]},
-    {name:"Developer", role:"UI/UX Designer", skills:["Figma","CSS"]},
-    {name:"Developer", role:"Full-stack Developer", skills:["Node","PostgreSQL"]},
-  ];
-  let members = [...SEED_MEMBERS];
+  // ---- Team roster (persisted on the backend; photos upload right here) ----
+  let members = [];
+  let editingMemberId = null;
+  let chosenPhotoFile = null;
+
+  async function loadTeam(){
+    const result = await AT.fetchTeam();
+    members = result || [];
+    document.getElementById("stat-devs").textContent = members.length;
+    renderRoster();
+  }
 
   function renderRoster(){
     const list = document.getElementById("roster-list");
-    document.getElementById("stat-devs").textContent = members.length;
-    list.innerHTML = members.map((m, i) => `
+    if (!members.length){ list.innerHTML = '<div class="empty-state">No team members yet.</div>'; return; }
+    list.innerHTML = members.map((m) => `
       <div class="dev-row">
-        <div class="avatar"><i class="bi bi-person-fill"></i></div>
+        <div class="avatar">${m.photo ? `<img src="${m.photo}" alt="${AT.escapeHtml(m.name)}">` : '<i class="bi bi-person-fill"></i>'}</div>
         <div class="flex-grow-1">
           <div style="font-size:13px; font-weight:600;">${AT.escapeHtml(m.name)}</div>
-          <div class="d-flex gap-1 mt-1 flex-wrap">${m.skills.map(s => `<span class="badge-stack">${AT.escapeHtml(s)}</span>`).join("")}</div>
+          <div style="font-size:11px; color:var(--text-mute);">${AT.escapeHtml(m.role || "")}</div>
+          <div class="d-flex gap-1 mt-1 flex-wrap">${(m.skills||[]).map(s => `<span class="badge-stack">${AT.escapeHtml(s)}</span>`).join("")}</div>
         </div>
-        <div class="dp-icon-btn" style="position:static; background:var(--surface-3); color:var(--text-dim);" onclick="removeMember(${i})" title="Remove"><i class="bi bi-x"></i></div>
+        <div class="d-flex flex-column gap-1">
+          <div class="dp-icon-btn" style="position:static; background:var(--surface-3); color:var(--text-dim);" onclick="editMember('${m.id}')" title="Edit"><i class="bi bi-pencil"></i></div>
+          <div class="dp-icon-btn" style="position:static; background:var(--surface-3); color:var(--text-dim);" onclick="removeMember('${m.id}')" title="Remove"><i class="bi bi-x"></i></div>
+        </div>
       </div>`).join("");
   }
-  function addMember(){
+
+  function onPhotoChosen(){
+    const input = document.getElementById("member-photo");
+    chosenPhotoFile = input.files[0] || null;
+    const label = document.getElementById("photo-drop-label");
+    label.textContent = chosenPhotoFile
+      ? `${chosenPhotoFile.name} — click to change`
+      : "Click to upload a profile photo (.jpg, .png, .webp — up to 5MB)";
+  }
+
+  async function saveMember(){
     const name = document.getElementById("member-name").value.trim();
+    if (!name){ document.getElementById("member-name").focus(); return; }
     const role = document.getElementById("member-role").value.trim();
     const skillsRaw = document.getElementById("member-skills").value.trim();
-    if (!name){ document.getElementById("member-name").focus(); return; }
-    const skills = skillsRaw ? skillsRaw.split(",").map(s => s.trim()).filter(Boolean) : ["New"];
-    members.push({name, role: role || "Developer", skills});
+    const status = document.getElementById("member-status").value;
+
+    const fd = new FormData();
+    fd.append("name", name);
+    fd.append("role", role);
+    fd.append("skills", skillsRaw);
+    fd.append("status", status);
+    if (chosenPhotoFile) fd.append("photo", chosenPhotoFile);
+    if (editingMemberId) fd.append("id", editingMemberId);
+
+    const btn = document.getElementById("member-save-btn");
+    btn.disabled = true;
+    btn.textContent = editingMemberId ? "Saving…" : "Adding…";
+    if (chosenPhotoFile) document.getElementById("photo-progress-wrap").style.display = "";
+
+    const result = await AT.submitTeamMember(fd, (pct) => {
+      document.getElementById("photo-progress-bar").style.width = pct + "%";
+    });
+
+    btn.disabled = false;
+    document.getElementById("photo-progress-wrap").style.display = "none";
+
+    if (!result.ok){
+      alert(result.error || "Something went wrong — please try again.");
+      return;
+    }
+
+    cancelMemberEdit();
+    await loadTeam();
+  }
+
+  function editMember(id){
+    const m = members.find(x => x.id === id);
+    if (!m) return;
+    editingMemberId = id;
+    document.getElementById("member-form-title").innerHTML = `Editing "${AT.escapeHtml(m.name)}"`;
+    document.getElementById("member-name").value = m.name || "";
+    document.getElementById("member-role").value = m.role || "";
+    document.getElementById("member-skills").value = (m.skills || []).join(", ");
+    document.getElementById("member-status").value = m.status === "busy" ? "busy" : "avail";
+    document.getElementById("photo-drop-label").textContent = m.photo
+      ? "This member already has a photo — choose a file to replace it"
+      : "Click to upload a profile photo (.jpg, .png, .webp — up to 5MB)";
+    chosenPhotoFile = null;
+    document.getElementById("member-photo").value = "";
+    document.getElementById("member-save-btn").textContent = "Save changes";
+    document.getElementById("member-cancel-btn").style.display = "";
+    window.scrollTo({ top: document.getElementById("member-name").closest(".card").offsetTop - 80, behavior: "smooth" });
+  }
+
+  function cancelMemberEdit(){
+    editingMemberId = null;
+    chosenPhotoFile = null;
+    document.getElementById("member-form-title").textContent = "Team roster";
     document.getElementById("member-name").value = "";
     document.getElementById("member-role").value = "";
     document.getElementById("member-skills").value = "";
-    renderRoster();
+    document.getElementById("member-status").value = "avail";
+    document.getElementById("member-photo").value = "";
+    document.getElementById("photo-drop-label").textContent = "Click to upload a profile photo (.jpg, .png, .webp — up to 5MB)";
+    document.getElementById("member-save-btn").textContent = "Add to roster";
+    document.getElementById("member-cancel-btn").style.display = "none";
   }
-  function removeMember(i){ members.splice(i,1); renderRoster(); }
+
+  async function removeMember(id){
+    if (!confirm("Remove this team member and their photo? This can't be undone.")) return;
+    const ok = await AT.deleteTeamMember(id);
+    if (ok) await loadTeam();
+    else alert("Couldn't remove that member — please try again.");
+  }
 </script>
 </body>
 </html>

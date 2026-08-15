@@ -8,6 +8,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/cards-v2.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=DM+Sans:wght@400;500;600&family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="assets/css/demo-embed.css" rel="stylesheet">
 </head>
@@ -109,6 +110,7 @@
           </div>
           <a href="team.html" class="btn-ghost" style="padding:6px 14px; font-size:12px;">See all</a>
         </div>
+        <div id="home-team-preview">
         <div class="dev-row">
           <div class="avatar"><i class="bi bi-person-fill"></i><img src="assets/img/team/team-1.jpg" alt="Justin" onerror="this.style.display='none'"></div>
           <div class="flex-grow-1">
@@ -132,6 +134,7 @@
             <div class="d-flex gap-1 mt-1"><span class="badge-stack">Laravel</span><span class="badge-stack">MySQL</span></div>
           </div>
           <span class="status-dot avail"></span>
+        </div>
         </div>
       </div>
     </div>
@@ -226,6 +229,12 @@
   AT.fetchProjects().then(projects => {
     if (projects && projects.length) {
       AT.renderWorkPreview(document.getElementById("home-work-preview"), projects, 3);
+    }
+  });
+
+  AT.fetchTeam().then(members => {
+    if (members && members.length) {
+      AT.renderTeamPreview(document.getElementById("home-team-preview"), members, 3);
     }
   });
 </script>

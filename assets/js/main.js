@@ -122,109 +122,212 @@ const AT = {
     return mb >= 1000 ? (mb / 1024).toFixed(2) + "GB" : mb.toFixed(1) + "MB";
   },
 
+  // ---- Team members (photos uploaded through dev mode, not files) ----
+  async fetchTeam() {
+    try {
+      const res = await fetch(`${API_BASE}/api/team.php?action=list`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data.members || [];
+    } catch (e) { return null; } // null = backend unreachable
+  },
+  // Uses XHR so photo uploads get progress events, same as project videos.
+  submitTeamMember(formData, onProgress) {
+    return new Promise((resolve) => {
+      const token = localStorage.getItem(AT_TOKEN_KEY);
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `${API_BASE}/api/team.php?action=upsert`);
+      if (token) xhr.setRequestHeader("X-Dev-Token", token);
+      xhr.upload.addEventListener("progress", (e) => {
+        if (e.lengthComputable && onProgress) onProgress(Math.round((e.loaded / e.total) * 100));
+      });
+      xhr.onload = () => {
+        let data = {};
+        try { data = JSON.parse(xhr.responseText); } catch (e) {}
+        resolve({ ok: xhr.status >= 200 && xhr.status < 300, ...data });
+      };
+      xhr.onerror = () => resolve({ ok: false, error: "Network error — couldn't reach the server." });
+      xhr.send(formData);
+    });
+  },
+  async deleteTeamMember(id) {
+    try {
+      const token = localStorage.getItem(AT_TOKEN_KEY);
+      const fd = new FormData();
+      fd.append("id", id);
+      const res = await fetch(`${API_BASE}/api/team.php?action=delete`, {
+        method: "POST",
+        headers: token ? { "X-Dev-Token": token } : {},
+        body: fd,
+      });
+      return res.ok;
+    } catch (e) { return false; }
+  },
+
+  // Renders team-card grid (team.html) from live member data, with a
+  // real uploaded photo when present, falling back to the icon otherwise.
+  renderTeamGrid(containerEl, members) {
+    if (!containerEl || !members || !members.length) return;
+    containerEl.innerHTML = members.map(m => {
+      const photoHtml = m.photo
+        ? `<img src="${AT.escapeAttr(m.photo)}" alt="${AT.escapeAttr(m.name)}">`
+        : "";
+      const skillsHtml = (m.skills || []).map(s => `<span class="badge-stack">${AT.escapeHtml(s)}</span>`).join("");
+      const statusLabel = m.status === "busy" ? "In progress" : "Available";
+      const statusClass = m.status === "busy" ? "busy" : "avail";
+      return `
+      <div class="col-md-6 col-lg-4">
+        <div class="team-card">
+          <div class="team-photo"><i class="bi bi-person-fill"></i>${photoHtml}</div>
+          <h6>${AT.escapeHtml(m.name)}</h6>
+          <div class="role">${AT.escapeHtml(m.role)}</div>
+          <div class="d-flex gap-1 justify-content-center flex-wrap mb-2">${skillsHtml}</div>
+          <div style="font-size:11.5px; color:var(--text-mute);"><span class="status-dot ${statusClass}"></span> ${statusLabel}</div>
+        </div>
+      </div>`;
+    }).join("");
+  },
+
+  // Compact avatar-only version used in the homepage "Meet the team" preview.
+  renderTeamPreview(containerEl, members, limit) {
+    if (!containerEl || !members || !members.length) return;
+    const list = limit ? members.slice(0, limit) : members;
+    containerEl.innerHTML = list.map(m => {
+      const photoHtml = m.photo
+        ? `<img src="${AT.escapeAttr(m.photo)}" alt="${AT.escapeAttr(m.name)}">`
+        : "";
+      const skillsHtml = (m.skills || []).slice(0, 3).map(s => `<span class="badge-stack">${AT.escapeHtml(s)}</span>`).join("");
+      const statusClass = m.status === "busy" ? "busy" : "avail";
+      return `
+      <div class="dev-row">
+        <div class="avatar"><i class="bi bi-person-fill"></i>${photoHtml}</div>
+        <div class="flex-grow-1">
+          <div style="font-size:13.5px; font-weight:600;">${AT.escapeHtml(m.name)}</div>
+          <div class="d-flex gap-1 mt-1">${skillsHtml}</div>
+        </div>
+        <span class="status-dot ${statusClass}"></span>
+      </div>`;
+    }).join("");
+  },
+
+  // ---- Thumbnail color variety (no real poster images exist, so each
+  // project gets a distinct, consistent gradient derived from its name) ----
+  wcHueFromString(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    return Math.abs(hash) % 360;
+  },
+  wcGradient(name) {
+    const h = AT.wcHueFromString(name || "project");
+    return `linear-gradient(135deg, hsl(${h},60%,22%) 0%, hsl(${(h + 50) % 360},55%,14%) 100%)`;
+  },
+  wcCard(p, compact) {
+    const hasVideo = !!p.video;
+    const badgeHtml = hasVideo
+      ? `<span class="wc-thumb-badge has-video"><i class="bi bi-record-circle-fill"></i> Screen recording</span>`
+      : `<span class="wc-thumb-badge"><i class="bi bi-record-circle"></i> Coming soon</span>`;
+    const desc = p.tagline || (p.description ? p.description.slice(0, 100) : "");
+    const tagsHtml = (p.tags || []).map(t => `<span class="badge-stack">${AT.escapeHtml(t)}</span>`).join("");
+    const actionsHtml = `
+      ${p.live ? `<a class="btn-ghost" style="padding:5px 12px; font-size:11.5px;" href="${AT.escapeAttr(p.live)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Visit site</a>` : ""}
+      ${p.repo ? `<a class="btn-ghost" style="padding:5px 12px; font-size:11.5px;" href="${AT.escapeAttr(p.repo)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Repo</a>` : ""}
+    `;
+    return `
+      <div class="work-card-v2${compact ? " compact" : ""}">
+        <div class="wc-thumb" style="background:${AT.wcGradient(p.name)}" onclick="AT.openLightbox('${p.id}')">
+          <div class="wc-play"><i class="bi bi-play-fill"></i></div>
+          ${badgeHtml}
+        </div>
+        <div class="wc-body">
+          <h6>${AT.escapeHtml(p.name)}</h6>
+          ${compact ? "" : `<p>${AT.escapeHtml(desc)}</p>`}
+          <div class="wc-tags">${tagsHtml}</div>
+          <div class="wc-actions">${actionsHtml}</div>
+        </div>
+      </div>`;
+  },
+
   // Renders the public "Our work" card grid from live project data.
   // `projects` = array from fetchProjects(); `limit` optionally caps how
   // many show (used by index.html's compact preview).
   renderWorkGrid(containerEl, projects, limit) {
     if (!containerEl) return;
-    this._lastProjects = projects; // used by openProjectDetails
+    this._lastProjects = projects; // used by openLightbox
     const list = limit ? projects.slice(0, limit) : projects;
     if (!list.length) {
       containerEl.innerHTML = `<div class="col-12"><div class="empty-state">No projects published yet.</div></div>`;
       return;
     }
-    containerEl.innerHTML = list.map(p => {
-      const mediaHtml = p.video
-        ? `<video class="video-embed lg" src="${p.video}" controls preload="metadata"></video>`
-        : `<div class="video-placeholder lg"><div class="vp-play"><i class="bi bi-play-fill"></i></div><span class="vp-label"><i class="bi bi-record-circle"></i> Screen recording coming soon</span></div>`;
-      const desc = p.tagline || (p.description ? p.description.slice(0, 100) : "");
-      const tagsHtml = (p.tags || []).map(t => `<span class="badge-stack">${AT.escapeHtml(t)}</span>`).join("");
-      return `
-      <div class="col-md-6 col-lg-4">
-        <div class="work-card">
-          ${mediaHtml}
-          <h6>${AT.escapeHtml(p.name)}</h6>
-          <p>${AT.escapeHtml(desc)}</p>
-          <div class="d-flex gap-1 flex-wrap mb-2">${tagsHtml}</div>
-          <div class="d-flex gap-2 flex-wrap">
-            ${p.live ? `<a class="btn-ghost" style="padding:5px 12px; font-size:11.5px;" href="${AT.escapeAttr(p.live)}" target="_blank" rel="noopener">Visit site</a>` : ""}
-            ${p.repo ? `<a class="btn-ghost" style="padding:5px 12px; font-size:11.5px;" href="${AT.escapeAttr(p.repo)}" target="_blank" rel="noopener">Repo</a>` : ""}
-            <button class="btn-ghost" style="padding:5px 12px; font-size:11.5px;" onclick="AT.openProjectDetails('${p.id}')">Details</button>
-          </div>
-        </div>
-      </div>`;
-    }).join("");
+    containerEl.className = (containerEl.className || "") + " wc-grid";
+    containerEl.innerHTML = list.map(p => `<div class="col-md-6">${AT.wcCard(p, false)}</div>`).join("");
   },
 
-  // Compact 3-up "Our work" preview used on the homepage (.proj-card layout).
+  // Compact 3-up "Our work" preview used on the homepage.
   renderWorkPreview(containerEl, projects, limit) {
     if (!containerEl) return;
     this._lastProjects = projects;
     const list = limit ? projects.slice(0, limit) : projects;
     if (!list.length) return;
-    containerEl.innerHTML = list.map(p => {
-      const mediaHtml = p.video
-        ? `<video class="video-embed" src="${p.video}" preload="metadata" muted onmouseover="this.play()" onmouseout="this.pause()"></video>`
-        : `<div class="video-placeholder"><div class="vp-play"><i class="bi bi-play-fill"></i></div><span class="vp-label"><i class="bi bi-record-circle"></i> Screen recording</span></div>`;
-      return `
-      <div class="col-md-4">
-        <div class="proj-card" style="cursor:pointer;" onclick="AT.openProjectDetails('${p.id}')">
-          ${mediaHtml}
-          <div style="font-size:12.5px; font-weight:600;">${AT.escapeHtml(p.name)}</div>
-          <div style="font-size:11px; color:var(--text-mute);">${AT.escapeHtml(p.tagline || (p.tags||[]).join(" · "))}</div>
-        </div>
-      </div>`;
-    }).join("");
+    containerEl.className = (containerEl.className || "") + " wc-grid";
+    containerEl.innerHTML = list.map(p => `<div class="col-md-4">${AT.wcCard(p, true)}</div>`).join("");
   },
 
-  openProjectDetails(id) {
+  // Theater lightbox: click a thumbnail -> big video + all project info,
+  // shown below the player.
+  openLightbox(id) {
     const p = (this._lastProjects || []).find(x => x.id === id);
     if (!p) return;
-    let modalEl = document.getElementById("atProjectModal");
-    if (!modalEl) {
-      modalEl = document.createElement("div");
-      modalEl.id = "atProjectModal";
-      modalEl.className = "modal fade";
-      modalEl.tabIndex = -1;
-      document.body.appendChild(modalEl);
+
+    let backdrop = document.getElementById("atLightbox");
+    if (!backdrop) {
+      backdrop = document.createElement("div");
+      backdrop.id = "atLightbox";
+      backdrop.className = "at-lightbox-backdrop";
+      backdrop.addEventListener("click", (e) => { if (e.target === backdrop) AT.closeLightbox(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") AT.closeLightbox(); });
+      document.body.appendChild(backdrop);
     }
+
     const tagsHtml = (p.tags || []).map(t => `<span class="badge-stack">${AT.escapeHtml(t)}</span>`).join("");
-    modalEl.innerHTML = `
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="background:var(--surface); border:1px solid var(--border); color:var(--text);">
-          <div class="modal-header" style="border-color:var(--border);">
-            <h5 class="modal-title">${AT.escapeHtml(p.name)}</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            ${p.video ? `<video class="video-embed lg mb-3" src="${p.video}" controls preload="metadata"></video>` : ""}
-            <p style="font-size:13.5px; color:var(--text-dim); line-height:1.6;">${AT.escapeHtml(p.description || p.tagline || "No description yet.")}</p>
-            <div class="d-flex gap-1 flex-wrap mb-3">${tagsHtml}</div>
-            <div class="d-flex gap-2 flex-wrap">
-              ${p.live ? `<a class="btn-grad" href="${AT.escapeAttr(p.live)}" target="_blank" rel="noopener">Visit live site</a>` : ""}
-              ${p.repo ? `<a class="btn-ghost" href="${AT.escapeAttr(p.repo)}" target="_blank" rel="noopener">View repo</a>` : ""}
-            </div>
-          </div>
+    const videoHtml = p.video
+      ? `<video src="${p.video}" controls autoplay preload="metadata"></video>`
+      : `<div class="at-lightbox-empty"><i class="bi bi-camera-reels"></i><span>No screen recording uploaded yet</span></div>`;
+    const actionsHtml = `
+      ${p.live ? `<a class="btn-grad" href="${AT.escapeAttr(p.live)}" target="_blank" rel="noopener">Visit live site</a>` : ""}
+      ${p.repo ? `<a class="btn-ghost" href="${AT.escapeAttr(p.repo)}" target="_blank" rel="noopener">View repo</a>` : ""}
+    `;
+
+    backdrop.innerHTML = `
+      <div class="at-lightbox-panel" onclick="event.stopPropagation()">
+        <div class="at-lightbox-close" onclick="AT.closeLightbox()"><i class="bi bi-x"></i></div>
+        <div class="at-lightbox-video-wrap">${videoHtml}</div>
+        <div class="at-lightbox-info">
+          <h3>${AT.escapeHtml(p.name)}</h3>
+          <p>${AT.escapeHtml(p.description || p.tagline || "No description yet.")}</p>
+          <div class="at-lightbox-tags">${tagsHtml}</div>
+          <div class="at-lightbox-actions">${actionsHtml}</div>
         </div>
       </div>`;
-    const modal = (typeof bootstrap !== "undefined")
-      ? bootstrap.Modal.getOrCreateInstance(modalEl)
-      : null;
-    if (modal) {
-      modal.show();
-    } else {
-      modalEl.classList.add("show");
-      modalEl.style.display = "block";
-      modalEl.style.background = "rgba(0,0,0,.6)";
-      const closeBtn = modalEl.querySelector(".btn-close");
-      if (closeBtn) closeBtn.addEventListener("click", () => {
-        modalEl.classList.remove("show");
-        modalEl.style.display = "none";
-      });
-      modalEl.addEventListener("click", (e) => {
-        if (e.target === modalEl) { modalEl.classList.remove("show"); modalEl.style.display = "none"; }
-      });
-    }
+
+    requestAnimationFrame(() => backdrop.classList.add("open"));
+    document.body.style.overflow = "hidden";
+  },
+
+  closeLightbox() {
+    const backdrop = document.getElementById("atLightbox");
+    if (!backdrop) return;
+    backdrop.classList.remove("open");
+    document.body.style.overflow = "";
+    setTimeout(() => {
+      const video = backdrop.querySelector("video");
+      if (video) video.pause();
+      backdrop.innerHTML = "";
+    }, 200);
+  },
+
+  // Kept as an alias so any old onclick="AT.openProjectDetails(...)" still works.
+  openProjectDetails(id) {
+    AT.openLightbox(id);
   },
 
   escapeHtml(str) {

@@ -1,0 +1,10 @@
+# These live on the PHP backend (WebHostMost), never on Vercel/GitHub.
+# Keeping them out of this repo means the password hash and any uploaded
+# videos/photos can never end up publicly downloadable from the Vercel URL.
+/api/
+/data/
+/uploads/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
