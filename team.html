@@ -52,7 +52,7 @@
     <p>Every project gets matched to the right combination of skills across the team &mdash; not just one person's bandwidth.</p>
   </div>
 
-  <div class="row g-3">
+  <div class="row g-3" id="team-grid">
 
       <div class="col-md-6 col-lg-4">
         <div class="team-card">
@@ -115,6 +115,14 @@
   renderTopline("3 of 5 devs available now", "Get a free quote", "quote.html");
   renderMobileTopbar();
   renderMobileBottomBar("team");
+
+  // Pull the live roster (with any uploaded photos) from the backend.
+  // If it can't be reached, the static cards already in the page stay put.
+  AT.fetchTeam().then(members => {
+    if (members && members.length) {
+      AT.renderTeamGrid(document.getElementById("team-grid"), members);
+    }
+  });
 </script>
 
 </body>

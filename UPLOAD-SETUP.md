@@ -30,7 +30,49 @@ account. Options:
 Either way, upload a small test recording first after deploying and
 confirm it actually lands in `/uploads/videos/` before relying on it.
 
-## Hosting split: frontend on Vercel, backend elsewhere (free)
+## What's new in this update
+
+- **Bigger, less-congested work cards.** The "Our work" grid is now 2
+  cards per row instead of 3, with a real click-to-expand "theater"
+  lightbox — clicking a thumbnail opens a big video player with the full
+  description, tags, and links laid out underneath it. Before you click,
+  every project shows a colorful gradient thumbnail (unique per project
+  name) with a play button, never an already-playing video sitting
+  inline in the grid.
+- **Team photos now upload through the dashboard**, not by hand-placing
+  files on the server. Go to `dashboard.html` → Team roster → the photo
+  upload box works exactly like the video upload box. Editing an existing
+  member now works too (click the pencil icon), not just adding new ones.
+- **Security fix:** `api/`, `data/`, and `uploads/` are no longer tracked
+  in this Git repo (see `.gitignore`) — they were previously being pushed
+  to the same repo Vercel deploys, which meant `config.php` (with your
+  password hash inside) was technically downloadable from your live
+  Vercel URL. Those folders still exist on your computer for your own
+  reference and as a backup of what's live on WebHostMost — just don't
+  `git add` them going forward.
+- Cleaned out a handful of stray empty files (`1000`, `200`,
+  `morphPeek(item)`, etc.) that were accidental artifacts from pasting
+  code into a terminal at some point — harmless, just clutter.
+
+### Deploying this update
+
+**To WebHostMost** (upload these into `public_html`, overwriting what's there):
+- `api/config.php`, `api/auth.php`, `api/projects.php` — updated to match
+  what's already live (token-based auth), so this is mostly a formality
+  to keep your local copy in sync, but push it anyway in case anything
+  drifted.
+- `api/team.php` — **new file**, required for team photo uploads to work.
+- `uploads/team/.htaccess` — **new**, create the `uploads/team` folder if
+  it doesn't exist and make sure it's writable (755).
+- `data/team.json` — only upload this if `data/team.json` doesn't already
+  exist on the server; if it does, leave the live one alone so you don't
+  wipe out any team edits you've already made through the dashboard.
+
+**To Vercel** (via your normal `git add . && git commit && git push`):
+- Everything else — `index.html`, `work.html`, `team.html`,
+  `dashboard.html`, `assets/`. Git will no longer try to push `api/`,
+  `data/`, or `uploads/` at all now that they're gitignored.
+
 
 If you don't want to pay for InfinityFree, you can host the static
 frontend (`index.html`, `work.html`, etc.) on Vercel for free, and put
